@@ -184,7 +184,7 @@ main{min-height:60vh}
 .contact dl{margin:20px 0 0;display:grid;grid-template-columns:auto 1fr;gap:10px 24px;font-size:14.5px}
 .contact dt{color:var(--fg-3)}
 .contact dd{margin:0}
-.map{aspect-ratio:16/10;border-radius:10px;border:1px solid var(--line);background:
+.map{display:block;aspect-ratio:16/10;border-radius:10px;border:1px solid var(--line);background:
   repeating-linear-gradient(0deg,transparent 0 38px,var(--line) 38px 39px),
   repeating-linear-gradient(90deg,transparent 0 38px,var(--line) 38px 39px),var(--bg-2);position:relative}
 .map .pin{position:absolute;left:52%;top:46%;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 20%,transparent)}
@@ -446,7 +446,7 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
 
 <header class="nav" id="nav">
   <div class="wrap">
-    <a class="brand" href="#home">QIQI CATTERY<small>英國短毛貓舍</small></a>
+    <a class="brand" href="#home">QIQI CATTERY<small>錡錡貓舍</small></a>
     <nav class="links" id="links">
       <a href="#kittens" data-route="kittens">幼貓找家</a>
       <a href="#cats" data-route="cats">種公種母</a>
@@ -475,12 +475,12 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
 
 <footer>
   <div class="wrap">
-    <div><span class="brand">QIQI CATTERY<small>英國短毛貓舍</small></span><p>家庭式繁育，每一胎都在家中出生、與人共同生活。參觀採預約制，歡迎先透過 Line 與我們聊聊。</p></div>
+    <div><span class="brand">QIQI CATTERY<small>錡錡貓舍 Meow x Qi Qi cattery</small></span><p>家庭式繁育，每一胎都在家中出生、與人共同生活。參觀採預約制，歡迎先透過 Line 與我們聊聊。</p></div>
     <div><h4>瀏覽</h4><ul><li><a href="#kittens">幼貓找家</a></li><li><a href="#cats">種公種母</a></li><li><a href="#about">關於我們</a></li><li><a href="#news">公告</a></li></ul></div>
     <div><h4>領養</h4><ul><li><a href="#adopt">領養流程與須知</a></li><li><a href="#faq">常見問題</a></li><li><a href="#inquiry">預約看貓</a></li><li><a href="#waitlist">登記候補</a></li></ul></div>
-    <div><h4>聯絡</h4><ul><li>Line 官方帳號 <span class="mono">@qiqicattery</span></li><li>Instagram <span class="mono">@qiqi.cattery</span></li><li>Facebook 粉絲專頁</li><li>新北市新店區（預約後告知）</li></ul></div>
+    <div><h4>聯絡</h4><ul><li>Line 官方帳號 <span class="mono">@qiqicattery</span></li><li><a href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener">Instagram <span class="mono">@qiqi_2877</span></a></li><li><a href="https://www.facebook.com/p/%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D-Meow-x-Qi-Qi-cattery-61591605988475/" target="_blank" rel="noopener">Facebook 錡錡貓舍 Meow x Qi Qi cattery</a></li><li><a href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener">新竹縣竹北市，在 Google 地圖查看</a></li></ul></div>
   </div>
-  <div class="legal"><div class="wrap"><span>© 2026 Qiqi Cattery</span><span>特定寵物業許可證 新北特寵業繁字第 000000 號</span></div></div>
+  <div class="legal"><div class="wrap"><span>© 2026 錡錡貓舍 Qiqi Cattery</span><span>特定寵物業許可證 新竹縣特寵業繁字第 000000 號</span></div></div>
 </footer>
 
 <a class="line-fab" href="https://line.me/R/ti/p/@qiqicattery" target="_blank" rel="noopener">LINE</a>
@@ -498,17 +498,17 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
 /* ---------- Data ---------- */
 const TODAY = new Date('2026-11-09');
 const cats = {
-  atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Hsintien',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',
+  atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Zhubei',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',
     bio:'Atlas 是貓舍的第一隻種公，骨架圓厚、耳位低，個性穩重到近乎懶散。他會在產房外守著每一胎幼貓，是孩子們最早學會信任的大人。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['FIV / FeLV','陰性','2026-01-12 · 安心動物醫院'],['血型','A 型','2023-09-20']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0418'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-01-12'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-02-03']],
     litters:['L2026A','L2026B','L2025A','L2025B']},
-  luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Hsintien',role:'queen',breed:'英國短毛貓',color:'藍金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',
+  luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',
     bio:'Luna 的毛色是淡淡的香檳金底帶藍色漸層，眼睛是少見的湖綠。她是很有主見的母親，會自己決定讓誰靠近產房。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['FIV / FeLV','陰性','2026-02-20 · 安心動物醫院'],['血型','A 型','2024-03-15']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-1002'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-02-20'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-06-11']],
     litters:['L2026A','L2025B']},
-  coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Hsintien',role:'queen',breed:'英國短毛貓',color:'藍白',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',
+  coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍白',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',
     bio:'Coco 臉上的白色倒 V 對稱得像畫上去的。個性黏人，喜歡跟著人走來走去，她的孩子通常也最快學會撒嬌。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['FIV / FeLV','陰性','2026-03-02 · 安心動物醫院'],['血型','A 型','2024-01-10']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0627'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-03-02'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-03-08']],
@@ -587,9 +587,9 @@ views.home = () => {
   </div></section>
   <section class="section stone" id="home-contact"><div class="wrap contact">
     <div><h2 style="font-size:30px">聯絡與參觀</h2><p style="color:var(--fg-2);margin-top:14px;max-width:30em">參觀採預約制，每個時段只接待一組家庭。最快的方式是加 Line 跟我們聊聊，或填寫預約表單。</p>
-      <dl><dt>Line 官方帳號</dt><dd><span class="mono">@qiqicattery</span></dd><dt>Instagram</dt><dd><span class="mono">@qiqi.cattery</span></dd><dt>參觀時段</dt><dd>週六下午、週日上午</dd><dt>地點</dt><dd>新北市新店區，預約後告知詳細地址</dd></dl>
-      <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="#inquiry">預約看貓</a><a class="btn ghost" href="https://line.me/R/ti/p/@qiqicattery" target="_blank" rel="noopener">加入 Line</a></div></div>
-    <div class="map"><div class="pin"></div><div class="lbl">新店區 · 點擊開啟 Google Maps</div></div>
+      <dl><dt>Line 官方帳號</dt><dd><span class="mono">@qiqicattery</span></dd><dt>Instagram</dt><dd><a class="link" href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener"><span class="mono">@qiqi_2877</span></a></dd><dt>Facebook</dt><dd><a class="link" href="https://www.facebook.com/p/%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D-Meow-x-Qi-Qi-cattery-61591605988475/" target="_blank" rel="noopener">錡錡貓舍 Meow x Qi Qi cattery</a></dd><dt>參觀時段</dt><dd>週六下午、週日上午</dd><dt>地點</dt><dd>新竹縣竹北市，預約後告知詳細地址</dd></dl>
+      <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="#inquiry">預約看貓</a><a class="btn ghost" href="https://line.me/R/ti/p/@qiqicattery" target="_blank" rel="noopener">加入 Line</a><a class="btn ghost" href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener">Instagram</a></div></div>
+    <a class="map" href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener" aria-label="在 Google 地圖開啟錡錡貓舍"><div class="pin"></div><div class="lbl">錡錡貓舍 · 新竹縣竹北市 · 開啟 Google 地圖</div></a>
   </div></section>`;
 };
 
