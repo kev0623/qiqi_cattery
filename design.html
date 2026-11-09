@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Qiqi Cattery 網站設計書</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a left-rail numbered spec book. A narrow sticky chapter index on desktop,
+   a wide reading column on the right; every page mock is drawn in CSS at the
+   same artboard proportions so the six sections compare at a glance. */
+:root{
+  --bg:#F3F1EC;          /* 月白 porcelain */
+  --bg-2:#EAE7E0;        /* 石灰 stone */
+  --card:#FBFAF7;        /* 宣紙 paper */
+  --fg:#1B1A17;          /* 墨 ink */
+  --fg-2:#5B574F;        /* 灰墨 */
+  --fg-3:#8E8980;        /* 淡墨 */
+  --line:#D9D4CA;
+  --accent:#8F7146;      /* 煙燻琥珀 bronze */
+  --accent-2:#B59A6E;    /* 香檳 champagne */
+  --accent-soft:#EFE6D6;
+  --sage:#6F7F6B;        /* 可預約 */
+  --sage-soft:#E4EAE1;
+  --amber:#A8783A;       /* 已預訂 */
+  --amber-soft:#F1E6D1;
+  --mute:#8E8980;        /* 已送養 */
+  --mute-soft:#E8E6E1;
+  --shadow:0 1px 2px rgba(27,26,23,.06),0 12px 32px -16px rgba(27,26,23,.18);
+  --font-display:"Cormorant Garamond","Noto Serif TC","Songti TC",Georgia,serif;
+  --font-head:"Noto Serif TC","Songti TC","PMingLiU",Georgia,serif;
+  --font-body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --radius:4px;
+  --radius-lg:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161513; --bg-2:#1F1E1A; --card:#201F1B;
+    --fg:#EDE9E1; --fg-2:#B9B3A7; --fg-3:#847E73; --line:#35332D;
+    --accent:#C3A572; --accent-2:#9E8358; --accent-soft:#2B2620;
+    --sage:#9DB097; --sage-soft:#242A22; --amber:#D1A05F; --amber-soft:#2D2619;
+    --mute:#847E73; --mute-soft:#2A2925;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px -16px rgba(0,0,0,.6);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161513; --bg-2:#1F1E1A; --card:#201F1B;
+  --fg:#EDE9E1; --fg-2:#B9B3A7; --fg-3:#847E73; --line:#35332D;
+  --accent:#C3A572; --accent-2:#9E8358; --accent-soft:#2B2620;
+  --sage:#9DB097; --sage-soft:#242A22; --amber:#D1A05F; --amber-soft:#2D2619;
+  --mute:#847E73; --mute-soft:#2A2925;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 12px 32px -16px rgba(0,0,0,.6);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.75;font-weight:400;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:600;line-height:1.3;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:1180px;margin:0 auto}
+
+/* Cover */
+.cover{padding-block:72px 56px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end}
+.eyebrow{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.cover h1{font-size:clamp(34px,5vw,56px);margin-top:14px;font-weight:600}
+.cover h1 em{font-family:var(--font-display);font-style:italic;font-weight:400;color:var(--accent)}
+.cover .lede{max-width:34em;color:var(--fg-2);margin-top:18px;font-size:16px}
+.meta{font-family:var(--font-mono);font-size:12px;color:var(--fg-3);display:grid;gap:6px;text-align:right;line-height:1.5}
+.meta b{color:var(--fg);font-weight:500}
+
+/* Shell: rail + content */
+.shell{display:grid;grid-template-columns:200px minmax(0,1fr);gap:56px;padding-block:48px 96px}
+.rail{position:sticky;top:calc(24px + env(safe-area-inset-top,0px));align-self:start;display:grid;gap:4px;font-size:13px}
+.rail a{color:var(--fg-2);padding:6px 0;border-left:1px solid var(--line);padding-left:14px;display:flex;gap:10px}
+.rail a:hover{color:var(--fg);text-decoration:none;border-left-color:var(--accent)}
+.rail a span{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);min-width:1.6em}
+.content{display:grid;gap:88px;min-width:0}
+section{min-width:0}
+.sec-head{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:baseline;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:32px}
+.sec-head .num{font-family:var(--font-display);font-size:44px;line-height:1;color:var(--accent);font-weight:400}
+.sec-head h2{font-size:26px}
+.sec-head p{color:var(--fg-2);margin-top:6px;max-width:48em}
+h3{font-size:18px;margin:40px 0 14px}
+h3:first-child{margin-top:0}
+h4{font-size:14px;font-weight:700;margin:0 0 6px}
+.prose{max-width:66ch;color:var(--fg-2)}
+.prose+.prose{margin-top:12px}
+.prose strong{color:var(--fg);font-weight:500}
+ul.list{margin:10px 0 0;padding-left:1.2em;color:var(--fg-2);display:grid;gap:6px}
+ul.list li::marker{color:var(--accent)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.note{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:18px 22px}
+.note .eyebrow{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius-lg);background:var(--card)}
+th,td{padding:12px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-weight:500;color:var(--fg-3);font-size:12px;letter-spacing:.06em;font-family:var(--font-mono);text-transform:uppercase}
+tr:last-child td{border-bottom:0}
+td.mono,.mono{font-family:var(--font-mono);font-size:12.5px;color:var(--fg-2)}
+.tag{display:inline-block;font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:var(--fg-2)}
+
+/* Principles */
+.principles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.principle{padding:22px 0 0;border-top:2px solid var(--fg)}
+.principle .k{font-family:var(--font-display);font-size:30px;font-style:italic;font-weight:400;color:var(--accent);line-height:1}
+.principle h4{margin-top:10px;font-size:15px}
+.principle p{color:var(--fg-2);font-size:14px;margin-top:6px}
+
+/* Swatches */
+.swatches{grid-template-columns:repeat(6,minmax(0,1fr))}
+.sw{border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--line);background:var(--card)}
+.sw .chip{height:84px}
+.sw .lbl{padding:10px 12px;font-size:12.5px}
+.sw .lbl b{display:block;font-weight:500}
+.sw .lbl span{font-family:var(--font-mono);color:var(--fg-3);font-size:11px}
+.sw.big .chip{height:120px}
+
+/* Type specimens */
+.spec{display:grid;grid-template-columns:150px minmax(0,1fr);gap:18px;padding:18px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.spec:last-child{border-bottom:0}
+.spec .k{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);letter-spacing:.06em;line-height:1.6}
+.spec .k b{display:block;color:var(--fg-2);font-weight:500;font-size:12px}
+.t-display{font-family:var(--font-display);font-size:52px;line-height:1.05;font-weight:400;letter-spacing:-.01em}
+.t-display i{font-style:italic;color:var(--accent)}
+.t-h1{font-family:var(--font-head);font-size:38px;line-height:1.25;font-weight:600}
+.t-h2{font-family:var(--font-head);font-size:26px;line-height:1.3;font-weight:600}
+.t-h3{font-family:var(--font-head);font-size:19px;line-height:1.4;font-weight:600}
+.t-body{font-size:16px;line-height:1.85;color:var(--fg-2);max-width:40em}
+.t-small{font-size:13px;line-height:1.7;color:var(--fg-3)}
+.t-label{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--fg-3)}
+.t-data{font-family:var(--font-mono);font-size:14px;font-variant-numeric:tabular-nums}
+
+/* Component previews */
+.preview{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.preview.stack{display:grid;gap:16px;align-items:start}
+.btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--font-body);font-size:13px;letter-spacing:.12em;padding:12px 22px;border-radius:var(--radius);border:1px solid var(--fg);background:var(--fg);color:var(--bg);cursor:pointer;transition:transform .25s cubic-bezier(.2,.7,.2,1),background .25s}
+.btn:hover{transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--fg)}
+.btn.gold{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.text{background:transparent;border-color:transparent;color:var(--fg);padding-inline:0;border-bottom:1px solid var(--accent);border-radius:0}
+.btn .arr{font-family:var(--font-display);font-size:16px;line-height:1}
+.pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;letter-spacing:.08em;padding:4px 11px;border-radius:999px;font-weight:500}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.pill.ok{background:var(--sage-soft);color:var(--sage)}
+.pill.hold{background:var(--amber-soft);color:var(--amber)}
+.pill.done{background:var(--mute-soft);color:var(--mute)}
+.field{display:grid;gap:6px;min-width:220px}
+.field label{font-size:12px;letter-spacing:.08em;color:var(--fg-2)}
+.field .in{height:42px;border:0;border-bottom:1px solid var(--line);background:transparent;padding:0 2px;font-size:14px;color:var(--fg);font-family:var(--font-body)}
+.field .in:focus{outline:0;border-bottom-color:var(--accent)}
+
+/* Kitten card */
+.kcard{width:260px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+.kcard .ph{aspect-ratio:4/5;background:linear-gradient(160deg,var(--bg-2),var(--accent-soft));position:relative}
+.kcard .ph .pill{position:absolute;top:12px;left:12px;background:var(--card)}
+.kcard .body{padding:14px 16px 16px}
+.kcard .name{font-family:var(--font-head);font-size:17px;font-weight:600}
+.kcard .sub{font-size:12.5px;color:var(--fg-3);margin-top:2px}
+.kcard .row{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:var(--fg-2)}
+
+/* Artboards (page mocks) */
+.board{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:28px;align-items:start}
+.art{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:14px;box-shadow:var(--shadow)}
+.art .bar{height:10px;display:flex;gap:4px;margin-bottom:10px}
+.art .bar i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.frame{background:var(--bg);border:1px solid var(--line);border-radius:6px;overflow:hidden;font-size:9px;color:var(--fg-3)}
+.frame .nav{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid var(--line);background:var(--card)}
+.frame .nav .logo{font-family:var(--font-display);font-size:13px;color:var(--fg);letter-spacing:.08em}
+.frame .nav .links{display:flex;gap:10px}
+.frame .nav .links i{display:block;width:26px;height:4px;background:var(--line);border-radius:2px}
+.blk{background:var(--bg-2);border-radius:3px;position:relative}
+.blk.img{background:linear-gradient(150deg,var(--bg-2),var(--accent-soft))}
+.blk.dark{background:var(--fg);color:var(--bg)}
+.cap{position:absolute;left:8px;bottom:6px;font-family:var(--font-mono);font-size:8px;letter-spacing:.06em;color:var(--fg-2);text-transform:uppercase;background:var(--card);padding:1px 5px;border-radius:2px;border:1px solid var(--line)}
+.ln{height:4px;background:var(--line);border-radius:2px}
+.ln.d{background:var(--fg-3);opacity:.5}
+.ln.gold{background:var(--accent)}
+.pad{padding:12px 14px;display:grid;gap:8px}
+.cols{display:grid;gap:8px}
+.frame .foot{padding:12px 14px;background:var(--fg);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px;opacity:.9}
+.frame .foot .ln{background:var(--fg-3);opacity:.6}
+.phone{width:120px;justify-self:end;border-radius:14px;padding:6px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.phone .frame{border-radius:10px}
+.boardside{display:grid;gap:18px}
+.boardside h4{font-size:14px}
+.boardside .k{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);letter-spacing:.06em}
+.boardside p,.boardside li{font-size:14px;color:var(--fg-2)}
+.boardside ul{margin:6px 0 0;padding-left:1.1em;display:grid;gap:4px}
+.boardside li::marker{color:var(--accent)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.flow .step{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px}
+.flow .step b{font-family:var(--font-mono);font-weight:500;color:var(--accent);margin-right:6px;font-size:11px}
+.flow .sep{color:var(--fg-3);font-family:var(--font-display)}
+
+/* Sitemap */
+.sitemap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;overflow-x:auto}
+.sitemap .root{display:inline-block;background:var(--fg);color:var(--bg);padding:8px 16px;border-radius:var(--radius);font-family:var(--font-display);letter-spacing:.1em;font-size:15px}
+.tree{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:14px;margin-top:22px;position:relative;padding-top:18px}
+.tree::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:var(--line)}
+.node{border:1px solid var(--line);border-radius:var(--radius);padding:10px 12px;background:var(--bg);font-size:13px;position:relative}
+.node::before{content:"";position:absolute;top:-18px;left:50%;width:1px;height:18px;background:var(--line)}
+.node b{display:block;font-weight:600;font-family:var(--font-head)}
+.node .k{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--fg-3);margin-bottom:4px}
+.node ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:3px;font-size:12px;color:var(--fg-2)}
+.node li::before{content:"— ";color:var(--line)}
+
+/* Admin mock */
+.admin{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);display:grid;grid-template-columns:150px minmax(0,1fr);overflow:hidden;font-size:12px;min-height:280px}
+.admin .side{background:var(--bg-2);padding:16px 14px;display:grid;gap:6px;align-content:start;border-right:1px solid var(--line)}
+.admin .side .brand{font-family:var(--font-display);letter-spacing:.1em;color:var(--fg);margin-bottom:10px;font-size:14px}
+.admin .side a{padding:6px 10px;border-radius:4px;color:var(--fg-2)}
+.admin .side a.on{background:var(--card);color:var(--fg);font-weight:500}
+.admin .main{padding:18px 20px;display:grid;gap:14px;align-content:start;min-width:0}
+.admin .top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.admin .top h4{margin:0;font-size:16px}
+.admin table th,.admin table td{padding:8px 10px;font-size:12px}
+.admin .tablewrap{border-radius:6px}
+.switch{display:inline-block;width:30px;height:16px;border-radius:999px;background:var(--sage);position:relative;vertical-align:middle}
+.switch::after{content:"";position:absolute;right:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff}
+.switch.off{background:var(--line)}
+.switch.off::after{right:auto;left:2px}
+
+/* Timeline */
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.phase{border-top:2px solid var(--accent);padding-top:14px}
+.phase .k{font-family:var(--font-mono);font-size:11px;color:var(--fg-3);letter-spacing:.08em}
+.phase h4{margin-top:6px}
+.phase ul{margin:8px 0 0;padding-left:1.1em;font-size:13.5px;color:var(--fg-2);display:grid;gap:4px}
+.phase li::marker{color:var(--accent)}
+
+footer{border-top:1px solid var(--line);padding-block:28px 48px;color:var(--fg-3);font-size:12.5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media (max-width:960px){
+  .shell{grid-template-columns:1fr;gap:28px}
+  .rail{position:static;display:flex;flex-wrap:wrap;gap:4px 14px}
+  .rail a{border-left:0;padding-left:0}
+  .board{grid-template-columns:1fr}
+  .phone{justify-self:start}
+  .swatches{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .principles,.g3,.phases{grid-template-columns:1fr}
+  .cover{grid-template-columns:1fr}
+  .meta{text-align:left}
+}
+@media (max-width:600px){
+  .g2,.swatches{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .spec{grid-template-columns:1fr;gap:8px}
+  .t-display{font-size:40px}
+  .t-h1{font-size:30px}
+  .admin{grid-template-columns:1fr}
+  .admin .side{display:flex;flex-wrap:wrap;border-right:0;border-bottom:1px solid var(--line)}
+  .sec-head{grid-template-columns:1fr;gap:6px}
+  .content{gap:64px}
+}
+@media (prefers-reduced-motion: reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+<header class="cover">
+  <div>
+    <div class="eyebrow">Design Specification · v1.0</div>
+    <h1>Qiqi Cattery<br>官方網站<em> 設計書</em></h1>
+    <p class="lede">依據專案報價單 QT-2026-002 的六個功能專區，定義網站的視覺語言、資訊架構、頁面版面、元件規範與後台設計。風格定位為「安靜的高級感」：留白充足、襯線標題、低彩度琥珀點綴，讓貓咪的照片成為畫面主角。</p>
+  </div>
+  <div class="meta">
+    <div>依據文件 <b>貓舍網站_報價單_v4</b></div>
+    <div>文件編號 <b>QT-2026-002</b></div>
+    <div>設計書日期 <b>2026-11-09</b></div>
+    <div>狀態 <b>提案稿，待業主確認</b></div>
+  </div>
+</header>
+
+<div class="shell">
+<nav class="rail" aria-label="章節">
+  <a href="#s1"><span>01</span>設計定位</a>
+  <a href="#s2"><span>02</span>視覺系統</a>
+  <a href="#s3"><span>03</span>元件規範</a>
+  <a href="#s4"><span>04</span>資訊架構</a>
+  <a href="#s5"><span>05</span>品牌形象首頁</a>
+  <a href="#s6"><span>06</span>幼貓找家</a>
+  <a href="#s7"><span>07</span>種公種母</a>
+  <a href="#s8"><span>08</span>關於我們</a>
+  <a href="#s9"><span>09</span>社群與 SEO</a>
+  <a href="#s10"><span>10</span>後台管理</a>
+  <a href="#s11"><span>11</span>響應式與動效</a>
+  <a href="#s12"><span>12</span>技術與部署</a>
+  <a href="#s13"><span>13</span>範圍與交付</a>
+</nav>
+
+<main class="content">
+
+<!-- 01 -->
+<section id="s1">
+  <div class="sec-head"><div class="num">01</div><div><h2>設計定位</h2><p>一間貓舍的網站要同時說服兩種人：想找一隻健康幼貓回家的飼主，以及評估血統與繁育品質的同業。高級感不是金色和黑底，而是克制、秩序與對細節的在意。</p></div></div>
+
+  <div class="grid principles">
+    <div class="principle"><div class="k">Quiet</div><h4>安靜的畫面</h4><p>大面積留白、單一主色、極少裝飾線。每一屏只講一件事，讓視線停在貓咪身上。</p></div>
+    <div class="principle"><div class="k">Editorial</div><h4>雜誌式排版</h4><p>襯線中文標題搭配無襯線內文，照片以 4:5 直式為主，版面像一本精裝的育種圖鑑而不是電商列表。</p></div>
+    <div class="principle"><div class="k">Trust</div><h4>可驗證的信任</h4><p>血統書、疫苗、基因檢測不藏在文字裡，而是以清楚的資料卡呈現。狀態標示永遠一致，不讓飼主猜。</p></div>
+  </div>
+
+  <h3>風格參考關鍵字</h3>
+  <div class="flow">
+    <span class="step">精品珠寶官網的留白節奏</span><span class="sep">·</span>
+    <span class="step">攝影集畫冊的照片比例</span><span class="sep">·</span>
+    <span class="step">高級飯店的預約流程</span><span class="sep">·</span>
+    <span class="step">育種協會文件的資料嚴謹</span>
+  </div>
+
+  <h3>目標使用者與任務</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>使用者</th><th>進站目的</th><th>設計上要做到</th></tr></thead>
+    <tbody>
+      <tr><td>準飼主（主要）</td><td>看現在有哪些幼貓、什麼時候可以帶回家、怎麼預約</td><td>首頁三秒內看到「最新幼貓」入口；狀態一眼可辨；表單在手機上兩分鐘內填完</td></tr>
+      <tr><td>候補飼主</td><td>沒有合適的幼貓，想登記下一胎</td><td>每個已預訂／已送養的幼貓頁與列表底部都有候補入口</td></tr>
+      <tr><td>同業與評審</td><td>查看種公種母的血統、檢測、歷代後代</td><td>種貓頁以資料卡呈現，可展開血統書與檢測報告原件</td></tr>
+      <tr><td>貓舍主人（後台）</td><td>新胎上架、更改狀態、回覆詢問</td><td>後台用詞與前台一致；三步內完成上架；手機也能切換狀態</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 02 -->
+<section id="s2">
+  <div class="sec-head"><div class="num">02</div><div><h2>視覺系統</h2><p>色彩、字體、間距與質感的規格。所有頁面與元件都從這組 token 衍生，不另外取色。</p></div></div>
+
+  <h3>色彩</h3>
+  <p class="prose">底色取自宣紙與月白，而非純白，讓照片的白毛與畫面有層次差。主色「煙燻琥珀」只用在一處強調、連結與分隔符號，面積控制在畫面的 5% 以下。狀態色獨立於主色，避免「可預約」看起來像裝飾。</p>
+  <div class="grid swatches" style="margin-top:18px">
+    <div class="sw big"><div class="chip" style="background:#F3F1EC"></div><div class="lbl"><b>月白 Porcelain</b><span>#F3F1EC · 頁面底色</span></div></div>
+    <div class="sw big"><div class="chip" style="background:#FBFAF7;border-bottom:1px solid var(--line)"></div><div class="lbl"><b>宣紙 Paper</b><span>#FBFAF7 · 卡片、導覽列</span></div></div>
+    <div class="sw big"><div class="chip" style="background:#EAE7E0"></div><div class="lbl"><b>石灰 Stone</b><span>#EAE7E0 · 區塊交替底</span></div></div>
+    <div class="sw big"><div class="chip" style="background:#1B1A17"></div><div class="lbl"><b>墨 Ink</b><span>#1B1A17 · 標題、頁尾、主按鈕</span></div></div>
+    <div class="sw big"><div class="chip" style="background:#8F7146"></div><div class="lbl"><b>煙燻琥珀 Bronze</b><span>#8F7146 · 主強調色</span></div></div>
+    <div class="sw big"><div class="chip" style="background:#B59A6E"></div><div class="lbl"><b>香檳 Champagne</b><span>#B59A6E · 懸停、細線裝飾</span></div></div>
+  </div>
+  <div class="grid swatches" style="margin-top:14px">
+    <div class="sw"><div class="chip" style="background:#5B574F"></div><div class="lbl"><b>灰墨</b><span>#5B574F · 內文</span></div></div>
+    <div class="sw"><div class="chip" style="background:#8E8980"></div><div class="lbl"><b>淡墨</b><span>#8E8980 · 輔助文字</span></div></div>
+    <div class="sw"><div class="chip" style="background:#D9D4CA"></div><div class="lbl"><b>線</b><span>#D9D4CA · 分隔線、邊框</span></div></div>
+    <div class="sw"><div class="chip" style="background:#6F7F6B"></div><div class="lbl"><b>可預約 Sage</b><span>#6F7F6B · 狀態</span></div></div>
+    <div class="sw"><div class="chip" style="background:#A8783A"></div><div class="lbl"><b>已預訂 Amber</b><span>#A8783A · 狀態</span></div></div>
+    <div class="sw"><div class="chip" style="background:#8E8980"></div><div class="lbl"><b>已送養 Mute</b><span>#8E8980 · 狀態</span></div></div>
+  </div>
+
+  <h3>字體</h3>
+  <p class="prose">中文標題用思源宋體（Noto Serif TC），英文品牌字與數字裝飾用 Cormorant Garamond，內文用思源黑體（Noto Sans TC）。資料類欄位（出生日期、晶片號碼、檢測結果）用 IBM Plex Mono 的等寬數字對齊。四套字體皆為 Google Fonts，授權可商用。</p>
+  <div class="note" style="margin-top:18px">
+    <div class="spec"><div class="k"><b>Display</b>Cormorant Garamond 400 / Italic<br>52–72px · 品牌字、章節頁首</div><div class="t-display">Qiqi <i>Cattery</i></div></div>
+    <div class="spec"><div class="k"><b>H1</b>Noto Serif TC 600<br>38px · 頁面主標</div><div class="t-h1">讓每一隻貓，都在被期待中出生</div></div>
+    <div class="spec"><div class="k"><b>H2</b>Noto Serif TC 600<br>26px · 區塊標題</div><div class="t-h2">本季幼貓 · 2026 春</div></div>
+    <div class="spec"><div class="k"><b>H3</b>Noto Serif TC 600<br>19px · 卡片名稱</div><div class="t-h3">Luna 的孩子 · 藍金漸層</div></div>
+    <div class="spec"><div class="k"><b>Body</b>Noto Sans TC 400<br>16px / 1.85 · 內文</div><div class="t-body">我們是以家庭式環境繁育的英國短毛貓貓舍。每一胎幼貓都在家中出生、與人共同生活，離家前完成兩劑疫苗、驅蟲與基因檢測。</div></div>
+    <div class="spec"><div class="k"><b>Small</b>Noto Sans TC 400<br>13px · 說明、圖說</div><div class="t-small">照片攝於 8 週齡，實際花色會隨成長略有變化。</div></div>
+    <div class="spec"><div class="k"><b>Label</b>IBM Plex Mono 400<br>11px · 字距 .18em · 分類標籤</div><div class="t-label">British Shorthair · Female · Born 2026.03.12</div></div>
+    <div class="spec"><div class="k"><b>Data</b>IBM Plex Mono 400<br>14px · 表格數字</div><div class="t-data">晶片 900 1150 0012 3456　FIV/FeLV 陰性　PKD N/N</div></div>
+  </div>
+
+  <h3>間距、圓角與質感</h3>
+  <div class="grid g3">
+    <div class="note"><div class="eyebrow">Spacing</div><p class="prose" style="font-size:14px">8px 基準格。區塊間距 96 / 128px（手機 64px），卡片內距 24px，內容欄最大寬度 1180px，單欄文字寬度 66 字。</p></div>
+    <div class="note"><div class="eyebrow">Radius</div><p class="prose" style="font-size:14px">按鈕與輸入框 4px，卡片與照片 10px，狀態標籤全圓。不使用大圓角，維持精裝書的方正感。</p></div>
+    <div class="note"><div class="eyebrow">Surface</div><p class="prose" style="font-size:14px">陰影只用在懸停的卡片與彈出層，數值低、擴散大。分隔以 1px 線條與底色深淺切換為主，不堆疊卡片。</p></div>
+  </div>
+
+  <h3>影像規範</h3>
+  <ul class="list">
+    <li>幼貓與種貓主圖固定 <strong>4:5 直式</strong>，首頁大圖 <strong>16:9</strong> 或 <strong>21:9</strong>，相簿 <strong>1:1</strong>。上傳時後台自動裁切並產生三種尺寸。</li>
+    <li>統一調色方向：自然光、低對比、略偏暖的灰。避免高飽和濾鏡，避免文字壓在貓臉上。</li>
+    <li>影片採無聲自動播放的短片（6 到 10 秒），點擊後展開含聲音的完整版。</li>
+    <li>所有素材由客戶提供（報價單注意事項第 4 點），設計書只規範比例與調性。</li>
+  </ul>
+</section>
+
+<!-- 03 -->
+<section id="s3">
+  <div class="sec-head"><div class="num">03</div><div><h2>元件規範</h2><p>全站共用的按鈕、狀態標籤、幼貓卡與表單欄位。這些元件在前台與後台外觀一致，只差操作權限。</p></div></div>
+
+  <h3>按鈕</h3>
+  <div class="preview">
+    <span class="btn">預約看貓 <span class="arr">→</span></span>
+    <span class="btn ghost">加入候補名單</span>
+    <span class="btn gold">送出詢問</span>
+    <span class="btn text">查看領養流程</span>
+  </div>
+  <ul class="list">
+    <li><strong>主按鈕（墨色）</strong>：每頁只出現一顆，對應該頁最重要的動作。</li>
+    <li><strong>線框按鈕</strong>：次要動作，與主按鈕並列時放右側。</li>
+    <li><strong>琥珀按鈕</strong>：只用於表單送出，讓「送出」在長表單中可被找到。</li>
+    <li><strong>文字按鈕</strong>：內文中的導引，底線用琥珀色。</li>
+    <li>字距 .12em，高度 44px，手機上全寬。懸停上移 1px 並加深，無其他特效。</li>
+  </ul>
+
+  <h3>狀態標籤</h3>
+  <div class="preview">
+    <span class="pill ok">可預約</span>
+    <span class="pill hold">已預訂</span>
+    <span class="pill done">已送養</span>
+  </div>
+  <p class="prose">三種狀態對應報價單「幼貓找家」的規格。顏色之外一律附文字，色弱使用者也能辨識。已送養的幼貓不下架，改以灰階呈現並進入「送養相簿」，成為貓舍的實績。</p>
+
+  <h3>幼貓卡</h3>
+  <div class="preview" style="align-items:flex-start">
+    <div class="kcard">
+      <div class="ph"><span class="pill ok">可預約</span></div>
+      <div class="body">
+        <div class="name">Hazel</div>
+        <div class="sub">英國短毛貓 · 藍金漸層 · 女生</div>
+        <div class="row"><span class="t-label" style="font-size:10px">Born 2026.03.12</span><span>8 週齡</span></div>
+      </div>
+    </div>
+    <div class="kcard">
+      <div class="ph" style="filter:saturate(.3) opacity(.85)"><span class="pill done">已送養</span></div>
+      <div class="body">
+        <div class="name">Milo</div>
+        <div class="sub">英國短毛貓 · 藍白 · 男生</div>
+        <div class="row"><span class="t-label" style="font-size:10px">Born 2025.11.02</span><span>已到新家</span></div>
+      </div>
+    </div>
+    <div class="boardside" style="flex:1;min-width:220px">
+      <div><div class="k">內容順序</div><p>狀態 → 名字 → 品種／花色／性別 → 出生日期與週齡。週齡由出生日期自動換算。</p></div>
+      <div><div class="k">互動</div><p>整張卡可點擊；懸停時照片放大 3%，若有影片則改播放短片。</p></div>
+      <div><div class="k">空狀態</div><p>列表沒有可預約幼貓時，顯示「本季幼貓已全數找到家」與候補入口，不留空白。</p></div>
+    </div>
+  </div>
+
+  <h3>表單欄位</h3>
+  <div class="preview">
+    <div class="field"><label>您的稱呼</label><input class="in" id="f-name" placeholder="林小姐" aria-label="您的稱呼"></div>
+    <div class="field"><label>聯絡方式（Line ID 或手機）</label><input class="in" id="f-contact" placeholder="@qiqi_fan" aria-label="聯絡方式"></div>
+    <div class="field"><label>想詢問的幼貓</label><input class="in" id="f-kitten" value="Hazel（藍金漸層）" aria-label="想詢問的幼貓"></div>
+  </div>
+  <p class="prose">底線式輸入框，聚焦時底線轉為琥珀色。錯誤訊息直接寫在欄位下方，說明怎麼修正。從幼貓詳情頁進入表單時自動帶入該貓名字。</p>
+</section>
+
+<!-- 04 -->
+<section id="s4">
+  <div class="sec-head"><div class="num">04</div><div><h2>資訊架構</h2><p>六個專區對應六個一級導覽項目。網址採語意化英文路徑，便於分享與 SEO。</p></div></div>
+  <div class="sitemap">
+    <span class="root">QIQI CATTERY</span>
+    <div class="tree">
+      <div class="node"><span class="k">/</span><b>首頁</b><ul><li>品牌大圖</li><li>品牌故事</li><li>最新幼貓</li><li>公告</li><li>環境</li><li>聯絡與地圖</li></ul></div>
+      <div class="node"><span class="k">/kittens</span><b>幼貓找家</b><ul><li>幼貓列表</li><li>/kittens/[slug] 詳情</li><li>/adopt 領養流程</li><li>/inquiry 預約表單</li><li>/waitlist 候補</li></ul></div>
+      <div class="node"><span class="k">/cats</span><b>種公種母</b><ul><li>種貓總覽</li><li>/cats/[slug] 個別頁</li><li>血統與檢測</li><li>歷代後代</li></ul></div>
+      <div class="node"><span class="k">/about</span><b>關於我們</b><ul><li>理念與團隊</li><li>證照資格</li><li>/faq 常見問題</li><li>/stories 飼主見證</li><li>/gallery 送養相簿</li></ul></div>
+      <div class="node"><span class="k">/news</span><b>公告</b><ul><li>公告列表</li><li>新胎預告</li><li>展賽紀錄</li></ul></div>
+      <div class="node"><span class="k">/admin</span><b>後台</b><ul><li>幼貓管理</li><li>種貓管理</li><li>詢問與候補</li><li>公告與內容</li></ul></div>
+    </div>
+  </div>
+  <h3>導覽列</h3>
+  <p class="prose">左側品牌字 Qiqi Cattery，中央五個項目：幼貓找家、種公種母、關於我們、公告、聯絡。右側固定一顆「預約看貓」主按鈕。捲動超過一屏後導覽列縮為 56px 高並加上 1px 底線。手機改為右上角選單，展開為全屏清單，字級放大到 28px。</p>
+</section>
+
+<!-- 05 -->
+<section id="s5">
+  <div class="sec-head"><div class="num">05</div><div><h2>品牌形象首頁</h2><p>報價單專區 1。任務是三秒內建立質感印象，並讓「最新幼貓」與「公告」的入口不需捲動就能看到。</p></div></div>
+  <div class="board">
+    <div class="art"><div class="bar"><i></i><i></i><i></i></div>
+      <div class="frame">
+        <div class="nav"><span class="logo">QIQI CATTERY</span><span class="links"><i></i><i></i><i></i><i></i></span><span class="ln gold" style="width:36px;height:10px;border-radius:2px"></span></div>
+        <div class="blk img" style="height:150px"><span class="cap">Hero 21:9 · 貓舍環境或母貓與幼貓</span>
+          <div style="position:absolute;left:14px;top:34px;display:grid;gap:6px"><span class="ln d" style="width:160px;height:8px"></span><span class="ln d" style="width:110px;height:8px"></span><span class="ln" style="width:70px;height:4px;margin-top:4px"></span></div></div>
+        <div class="pad"><span class="ln d" style="width:60px"></span><span class="ln" style="width:80%"></span><span class="ln" style="width:65%"></span></div>
+        <div class="pad" style="padding-top:0"><span class="ln d" style="width:90px;height:6px"></span>
+          <div class="cols" style="grid-template-columns:repeat(4,1fr)"><div class="blk img" style="aspect-ratio:4/5"><span class="cap">Kitten</span></div><div class="blk img" style="aspect-ratio:4/5"></div><div class="blk img" style="aspect-ratio:4/5"></div><div class="blk img" style="aspect-ratio:4/5"></div></div></div>
+        <div class="pad" style="background:var(--bg-2)"><div class="cols" style="grid-template-columns:1fr 1fr"><div style="display:grid;gap:5px"><span class="ln d" style="width:50px;height:6px"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:70%"></span><span class="ln" style="width:80%"></span></div><div style="display:grid;gap:5px"><span class="ln d" style="width:40px;height:6px"></span><span class="ln" style="width:85%"></span><span class="ln" style="width:60%"></span></div></div></div>
+        <div class="pad"><div class="cols" style="grid-template-columns:2fr 1fr 1fr"><div class="blk img" style="height:56px"><span class="cap">環境</span></div><div class="blk img"></div><div class="blk img"></div></div></div>
+        <div class="pad" style="padding-top:0"><div class="cols" style="grid-template-columns:1fr 1fr"><div style="display:grid;gap:5px"><span class="ln d" style="width:44px;height:6px"></span><span class="ln" style="width:70%"></span><span class="ln" style="width:50%"></span></div><div class="blk" style="height:44px"><span class="cap">Map</span></div></div></div>
+        <div class="foot"><span class="ln" style="width:60%"></span><span class="ln" style="width:60%"></span><span class="ln" style="width:60%"></span></div>
+      </div>
+    </div>
+    <div class="boardside">
+      <div><div class="k">01 · HERO</div><h4>品牌大圖</h4><p>滿版 21:9 影像，左下角放品牌一句話與「看看本季幼貓」文字按鈕。照片不加暗色遮罩，改用局部漸層確保文字可讀。</p></div>
+      <div><div class="k">02 · STORY</div><h4>品牌故事</h4><p>兩欄排版，左邊一段 120 字內的理念，右邊一張貓舍主人與貓的生活照。標題用宋體 38px。</p></div>
+      <div><div class="k">03 · KITTENS</div><h4>最新幼貓</h4><p>橫向四張幼貓卡，只顯示可預約與已預訂，右上角「查看全部」。沒有幼貓時整區改為候補邀請。</p></div>
+      <div><div class="k">04 · NOTICE</div><h4>公告快速入口</h4><p>石灰底色帶，列出最近兩則公告（新胎預告、休館、展賽）。日期用等寬字。</p></div>
+      <div><div class="k">05 · SPACE</div><h4>環境介紹</h4><p>一大兩小的照片組，點擊進入相簿燈箱。文字只放三個關鍵字：恆溫、獨立產房、每日消毒。</p></div>
+      <div><div class="k">06 · CONTACT</div><h4>聯絡資訊與地圖</h4><p>Line 官方帳號、Instagram、參觀採預約制說明；右側嵌入靜態地圖圖片，點擊開啟 Google Maps。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 -->
+<section id="s6">
+  <div class="sec-head"><div class="num">06</div><div><h2>幼貓找家</h2><p>報價單專區 2，也是全站最核心的流程。包含列表、詳情、狀態、預約詢問、候補名單與領養說明。</p></div></div>
+
+  <h3>幼貓列表 /kittens</h3>
+  <div class="board">
+    <div class="art"><div class="bar"><i></i><i></i><i></i></div>
+      <div class="frame">
+        <div class="nav"><span class="logo">QIQI CATTERY</span><span class="links"><i></i><i></i><i></i><i></i></span></div>
+        <div class="pad"><span class="ln d" style="width:120px;height:9px"></span><span class="ln" style="width:60%"></span>
+          <div style="display:flex;gap:6px;margin-top:4px"><span class="tag" style="font-size:8px;padding:1px 6px;background:var(--fg);color:var(--bg);border-color:var(--fg)">全部</span><span class="tag" style="font-size:8px;padding:1px 6px">可預約</span><span class="tag" style="font-size:8px;padding:1px 6px">已預訂</span><span class="tag" style="font-size:8px;padding:1px 6px">已送養</span><span class="tag" style="font-size:8px;padding:1px 6px;margin-left:auto">2026 春 ▾</span></div></div>
+        <div class="pad" style="padding-top:0"><span class="ln d" style="width:80px;height:6px"></span>
+          <div class="cols" style="grid-template-columns:repeat(3,1fr)">
+            <div class="blk img" style="aspect-ratio:4/5"><span class="cap" style="top:6px;bottom:auto;color:var(--sage)">可預約</span></div>
+            <div class="blk img" style="aspect-ratio:4/5"><span class="cap" style="top:6px;bottom:auto;color:var(--sage)">可預約</span></div>
+            <div class="blk img" style="aspect-ratio:4/5"><span class="cap" style="top:6px;bottom:auto;color:var(--amber)">已預訂</span></div></div>
+          <div class="cols" style="grid-template-columns:repeat(3,1fr)"><span class="ln" style="width:70%"></span><span class="ln" style="width:70%"></span><span class="ln" style="width:70%"></span></div></div>
+        <div class="pad" style="padding-top:0"><span class="ln d" style="width:80px;height:6px"></span>
+          <div class="cols" style="grid-template-columns:repeat(3,1fr)">
+            <div class="blk img" style="aspect-ratio:4/5;filter:saturate(.2)"></div><div class="blk img" style="aspect-ratio:4/5;filter:saturate(.2)"></div><div class="blk img" style="aspect-ratio:4/5;filter:saturate(.2)"></div></div></div>
+        <div class="pad" style="background:var(--bg-2);text-align:center"><span class="ln d" style="width:140px;height:6px;margin:0 auto"></span><span class="ln gold" style="width:70px;height:12px;border-radius:2px;margin:0 auto"></span></div>
+      </div>
+    </div>
+    <div class="boardside">
+      <div><div class="k">GROUPING</div><h4>以「胎」為單位分組</h4><p>同一胎的幼貓放在同一列，列首標示母貓名與出生日期（例如「Luna 的孩子 · 2026.03.12」）。這是貓舍的語言，也讓飼主理解手足關係。</p></div>
+      <div><div class="k">FILTER</div><h4>篩選</h4><p>狀態切換與季別下拉，不做複雜篩選。預設顯示全部，已送養灰階排在最後。</p></div>
+      <div><div class="k">WAITLIST</div><h4>候補入口</h4><p>列表最底固定一條石灰色帶：「沒有找到合適的孩子？登記候補，下一胎第一時間通知您。」</p></div>
+      <div><div class="k">EMPTY</div><h4>空狀態</h4><p>全部送養時，列表位置改放一張大圖與候補按鈕，仍保留已送養的灰階列作為實績。</p></div>
+    </div>
+  </div>
+
+  <h3>幼貓詳情 /kittens/[slug]</h3>
+  <div class="board">
+    <div class="art"><div class="bar"><i></i><i></i><i></i></div>
+      <div class="frame">
+        <div class="nav"><span class="logo">QIQI CATTERY</span><span class="links"><i></i><i></i><i></i><i></i></span></div>
+        <div class="pad"><div class="cols" style="grid-template-columns:1.1fr 1fr;gap:12px">
+          <div style="display:grid;gap:6px"><div class="blk img" style="aspect-ratio:4/5"><span class="cap">主圖 / 影片</span></div><div class="cols" style="grid-template-columns:repeat(5,1fr)"><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk" style="aspect-ratio:1"></div></div></div>
+          <div style="display:grid;gap:7px;align-content:start">
+            <span class="tag" style="font-size:8px;padding:1px 6px;width:max-content;color:var(--sage);border-color:var(--sage)">● 可預約</span>
+            <span class="ln d" style="width:90px;height:10px"></span>
+            <span class="ln" style="width:70%"></span>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:4px;padding-top:6px;border-top:1px solid var(--line)">
+              <span class="ln" style="width:60%"></span><span class="ln d" style="width:80%"></span>
+              <span class="ln" style="width:50%"></span><span class="ln d" style="width:70%"></span>
+              <span class="ln" style="width:55%"></span><span class="ln d" style="width:75%"></span>
+              <span class="ln" style="width:60%"></span><span class="ln d" style="width:65%"></span></div>
+            <span class="ln" style="width:95%;margin-top:4px"></span><span class="ln" style="width:85%"></span><span class="ln" style="width:90%"></span>
+            <span class="blk dark" style="height:14px;width:100%;border-radius:2px;margin-top:6px"></span>
+            <span class="ln gold" style="width:60px;height:4px"></span>
+          </div></div></div>
+        <div class="pad" style="background:var(--bg-2)"><span class="ln d" style="width:70px;height:6px"></span><div class="cols" style="grid-template-columns:1fr 1fr 1fr"><div class="blk" style="height:34px;background:var(--card)"><span class="cap">父</span></div><div class="blk" style="height:34px;background:var(--card)"><span class="cap">母</span></div><div class="blk" style="height:34px;background:var(--card)"><span class="cap">手足</span></div></div></div>
+        <div class="pad"><span class="ln d" style="width:70px;height:6px"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:80%"></span><span class="ln" style="width:85%"></span></div>
+      </div>
+    </div>
+    <div class="boardside">
+      <div><div class="k">LAYOUT</div><h4>左圖右文，捲動時右欄固定</h4><p>左側 4:5 主圖與縮圖列，有影片時主圖位置優先放影片。右側資料欄在桌機捲動時固定，手機則圖在上文在下。</p></div>
+      <div><div class="k">DATA CARD</div><h4>資料欄位</h4>
+        <ul><li>狀態、名字、一句介紹</li><li>品種／花色／性別／出生日期／週齡／預計離家日</li><li>離家前完成項目：疫苗、驅蟲、晶片、基因檢測（由後台勾選）</li><li>主按鈕「預約看貓」，下方文字按鈕「了解領養流程」</li></ul></div>
+      <div><div class="k">STATE</div><h4>狀態決定按鈕</h4><p>可預約：預約看貓。已預訂：加入候補（本胎或下一胎）。已送養：查看送養相簿與候補。按鈕文案由狀態自動切換，後台不需另設。</p></div>
+      <div><div class="k">LINEAGE</div><h4>父母與手足</h4><p>石灰底色帶連結到父母的種貓頁與同胎手足，把「幼貓找家」與「種公種母」串起來。</p></div>
+    </div>
+  </div>
+
+  <h3>預約／詢問表單與候補名單</h3>
+  <div class="flow">
+    <span class="step"><b>1</b>選擇幼貓或候補</span><span class="sep">→</span>
+    <span class="step"><b>2</b>稱呼與聯絡方式</span><span class="sep">→</span>
+    <span class="step"><b>3</b>居住環境與養貓經驗</span><span class="sep">→</span>
+    <span class="step"><b>4</b>期望參觀時段</span><span class="sep">→</span>
+    <span class="step"><b>5</b>送出，顯示 Line 加好友</span>
+  </div>
+  <div class="grid g2" style="margin-top:18px">
+    <div class="note"><div class="eyebrow">Form design</div><p class="prose" style="font-size:14px">單頁長表單，分四個小節以細線分隔，不做分步精靈。必填只有稱呼、聯絡方式、想詢問的對象三項，其餘選填，降低手機上的放棄率。送出後頁面顯示「我們會在一個工作天內透過 Line 聯絡您」與 Line 加好友連結，並寄 Email 通知貓舍主人。</p></div>
+    <div class="note"><div class="eyebrow">Waitlist</div><p class="prose" style="font-size:14px">候補名單是同一張表單的變體：第一題改為「偏好的花色與性別」。後台以「候補」分類顯示，當新胎上架時，主人可一鍵複製候補者聯絡清單。Line 自動通知不在本次範圍（報價單注意事項第 3 點），因此通知動作由主人手動進行。</p></div>
+  </div>
+
+  <h3>領養流程與須知 /adopt</h3>
+  <p class="prose">以縱向時間軸呈現六個步驟：線上詢問、預約參觀、確認與訂金、等待離家（12 週）、接貓日、終身諮詢。每步一段 60 字以內的說明。下方放「領養須知」手風琴：費用包含項目、健康保證、退換政策、不開放的情況。文案由客戶提供。</p>
+</section>
+
+<!-- 07 -->
+<section id="s7">
+  <div class="sec-head"><div class="num">07</div><div><h2>種公種母介紹</h2><p>報價單專區 3。這裡的讀者比較專業，版面轉向資料導向：血統、檢測、後代都要能被查核。</p></div></div>
+  <div class="board">
+    <div class="art"><div class="bar"><i></i><i></i><i></i></div>
+      <div class="frame">
+        <div class="nav"><span class="logo">QIQI CATTERY</span><span class="links"><i></i><i></i><i></i><i></i></span></div>
+        <div class="blk img" style="height:110px"><span class="cap">橫幅 16:9 · 種貓全身照</span>
+          <div style="position:absolute;left:14px;bottom:22px;display:grid;gap:5px"><span class="ln" style="width:60px;height:4px"></span><span class="ln d" style="width:140px;height:10px"></span></div></div>
+        <div class="pad"><div class="cols" style="grid-template-columns:1fr 1.3fr;gap:12px">
+          <div style="display:grid;gap:6px"><span class="ln d" style="width:60px;height:6px"></span><span class="ln" style="width:95%"></span><span class="ln" style="width:85%"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:70%"></span></div>
+          <div style="display:grid;gap:5px;padding:8px;background:var(--card);border:1px solid var(--line);border-radius:3px">
+            <span class="ln d" style="width:50px;height:6px"></span>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px"><span class="ln" style="width:80%"></span><span class="ln d" style="width:60%"></span><span class="ln gold" style="width:40%"></span><span class="ln" style="width:70%"></span><span class="ln d" style="width:60%"></span><span class="ln gold" style="width:40%"></span><span class="ln" style="width:85%"></span><span class="ln d" style="width:60%"></span><span class="ln gold" style="width:40%"></span></div>
+          </div></div></div>
+        <div class="pad" style="background:var(--bg-2)"><span class="ln d" style="width:70px;height:6px"></span>
+          <div class="cols" style="grid-template-columns:repeat(3,1fr)"><div class="blk" style="height:40px;background:var(--card)"><span class="cap">血統書</span></div><div class="blk" style="height:40px;background:var(--card)"><span class="cap">疫苗</span></div><div class="blk" style="height:40px;background:var(--card)"><span class="cap">基因</span></div></div></div>
+        <div class="pad"><span class="ln d" style="width:70px;height:6px"></span>
+          <div class="cols" style="grid-template-columns:repeat(6,1fr)"><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div><div class="blk img" style="aspect-ratio:1"></div></div></div>
+      </div>
+    </div>
+    <div class="boardside">
+      <div><div class="k">LIST /cats</div><h4>總覽頁</h4><p>分「種公 Kings」與「種母 Queens」兩段，每隻一張 4:5 卡，卡上只放名字、品種、花色。不放狀態標籤。</p></div>
+      <div><div class="k">PROFILE</div><h4>個別頁</h4><p>橫幅全身照，下方左文右表。左側 150 字的個性描述；右側資料卡列出登錄名、品種、花色、出生、血型、檢測結果。</p></div>
+      <div><div class="k">DOCUMENTS</div><h4>血統書、疫苗、基因檢測</h4><p>三張文件卡，點擊開啟燈箱顯示掃描原件或報告 PDF。基因欄位採固定格式（例如 PKD N/N、HCM N/N），並標示檢測機構與日期。</p></div>
+      <div><div class="k">OFFSPRING</div><h4>歷代後代</h4><p>以胎為單位的方形縮圖牆，每胎標出生年月與隻數，點擊回到該胎幼貓頁。已送養的孩子在這裡是驕傲，不做灰階。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 -->
+<section id="s8">
+  <div class="sec-head"><div class="num">08</div><div><h2>關於我們</h2><p>報價單專區 4。建立信任的頁面，用真實的人、證照與飼主的話來說。</p></div></div>
+  <div class="grid g4">
+    <div class="note"><div class="eyebrow">/about</div><h4>理念與團隊</h4><p class="prose" style="font-size:14px">長篇排版，單欄 66 字寬。穿插兩張全幅照片。團隊成員以圓形照片加一句話呈現，數量不限。</p></div>
+    <div class="note"><div class="eyebrow">/about#credentials</div><h4>證照與資格</h4><p class="prose" style="font-size:14px">協會登錄（CFA、TICA 等）、特定寵物業許可證、獸醫合作院所。每張證照一張卡，可放大檢視，標示有效期限。</p></div>
+    <div class="note"><div class="eyebrow">/faq</div><h4>常見問題</h4><p class="prose" style="font-size:14px">手風琴列表，依「預約、費用、健康、接貓後」四類分組。預設全部收合，展開動畫 250ms。</p></div>
+    <div class="note"><div class="eyebrow">/stories · /gallery</div><h4>飼主見證與送養相簿</h4><p class="prose" style="font-size:14px">見證採引言排版：一張飼主提供的照片、一段話、署名與接貓年份。相簿以 1:1 瀑布牆呈現，可依年份篩選。</p></div>
+  </div>
+</section>
+
+<!-- 09 -->
+<section id="s9">
+  <div class="sec-head"><div class="num">09</div><div><h2>社群整合與 SEO</h2><p>報價單專區 5。Instagram 動態、Line 與 Facebook 連結、分享預覽、流量統計與搜尋最佳化。</p></div></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>項目</th><th>設計規格</th><th>技術做法</th></tr></thead>
+    <tbody>
+      <tr><td>Instagram 最新貼文</td><td>首頁與關於頁底部，六格 1:1 縮圖，懸停顯示說明文字，點擊開新分頁到 IG</td><td class="mono">Instagram Basic Display / Graph API，伺服器端每小時快取；API 失效時顯示最近一次快取</td></tr>
+      <tr><td>Line 官方帳號、Facebook</td><td>頁尾與聯絡區固定圖示；手機版右下角浮動 Line 按鈕，捲動時縮為圓形</td><td class="mono">line.me/R/ti/p/@id 深連結、Facebook 粉專連結</td></tr>
+      <tr><td>分享按鈕</td><td>每隻幼貓與種貓頁右上角「分享」：複製連結、Line、Facebook</td><td class="mono">Open Graph 與 Twitter Card：og:image 用該貓 4:5 主圖裁成 1200×630，og:title 含名字與花色</td></tr>
+      <tr><td>來客統計</td><td>不影響介面</td><td class="mono">Google Analytics 4，事件：預約表單送出、候補送出、Line 點擊、分享</td></tr>
+      <tr><td>搜尋最佳化</td><td>每頁獨立標題與描述；圖片一律有替代文字（貓名、花色）</td><td class="mono">語意化路徑、sitemap.xml、robots.txt、結構化資料（Organization、LocalBusiness、FAQPage）、Core Web Vitals 達綠標</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <div class="sec-head"><div class="num">10</div><div><h2>後台管理</h2><p>報價單專區 2、3 與 6 都提到的管理畫面。目標是貓舍主人在手機上也能三步內完成一胎上架與狀態切換，並直接對應維護方案「客戶自行上架則免費」。</p></div></div>
+  <div class="admin">
+    <div class="side">
+      <div class="brand">QIQI · ADMIN</div>
+      <a class="on">幼貓管理</a><a>種貓管理</a><a>詢問與候補</a><a>公告</a><a>關於與相簿</a><a>設定</a>
+    </div>
+    <div class="main">
+      <div class="top"><h4>幼貓管理</h4><span class="btn" style="padding:8px 14px;font-size:12px">＋ 新增一胎</span></div>
+      <div class="tablewrap"><table>
+        <thead><tr><th>名字</th><th>胎</th><th>性別／花色</th><th>狀態</th><th>上架</th></tr></thead>
+        <tbody>
+          <tr><td>Hazel</td><td class="mono">Luna · 2026.03.12</td><td>女 · 藍金漸層</td><td><span class="pill ok">可預約</span></td><td><span class="switch"></span></td></tr>
+          <tr><td>Oslo</td><td class="mono">Luna · 2026.03.12</td><td>男 · 藍金漸層</td><td><span class="pill hold">已預訂</span></td><td><span class="switch"></span></td></tr>
+          <tr><td>Milo</td><td class="mono">Coco · 2025.11.02</td><td>男 · 藍白</td><td><span class="pill done">已送養</span></td><td><span class="switch"></span></td></tr>
+          <tr><td>（草稿）Pepper</td><td class="mono">Luna · 2026.03.12</td><td>女 · 藍白</td><td><span class="pill ok">可預約</span></td><td><span class="switch off"></span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:18px">
+    <div class="note"><div class="eyebrow">Litter first</div><h4>以「胎」建立</h4><p class="prose" style="font-size:14px">新增一胎時先選母貓、父貓與出生日期，再逐隻填名字、性別、花色並上傳照片。父母資料自動帶入幼貓頁的血統區塊。</p></div>
+    <div class="note"><div class="eyebrow">Status</div><h4>狀態與上下架分開</h4><p class="prose" style="font-size:14px">狀態是給飼主看的資訊（可預約／已預訂／已送養），上架開關決定前台是否顯示。兩者分開，才能先建好草稿再一次公開。</p></div>
+    <div class="note"><div class="eyebrow">Inbox</div><h4>詢問與候補</h4><p class="prose" style="font-size:14px">表單送出的資料列表，可標記「已聯絡」「已成交」「取消」，並一鍵複製聯絡方式。候補可依偏好花色篩選。</p></div>
+  </div>
+  <ul class="list" style="margin-top:18px">
+    <li>登入採 Email 加密碼，另開放 Google 帳號登入。帳號由我方建立並附操作教學（報價單專區 6）。</li>
+    <li>圖片上傳自動壓縮、裁切成 4:5 與 1:1 並產生 WebP；單張上限 10MB。</li>
+    <li>所有文字欄位用一般輸入框與簡單格式（粗體、連結、換行），不提供可能破壞版面的自由排版。</li>
+    <li>後台沿用前台的字體與色彩 token，但密度較高：字級 14px、列高 44px。</li>
+  </ul>
+</section>
+
+<!-- 11 -->
+<section id="s11">
+  <div class="sec-head"><div class="num">11</div><div><h2>響應式與動效</h2><p>報價單專區 1 明列「手機、平板、電腦都能正常瀏覽」。這裡定義斷點、版面變化與動效原則。</p></div></div>
+  <div class="board">
+    <div class="phone"><div class="frame">
+      <div class="nav" style="padding:8px 10px"><span class="logo" style="font-size:9px">QIQI</span><span class="ln d" style="width:12px;height:6px"></span></div>
+      <div class="blk img" style="height:90px"><span class="cap" style="font-size:7px">Hero 4:5</span></div>
+      <div class="pad" style="padding:8px 10px;gap:5px"><span class="ln d" style="width:50px;height:6px"></span><span class="ln" style="width:90%"></span><span class="ln" style="width:70%"></span></div>
+      <div class="pad" style="padding:0 10px 8px"><div class="cols" style="grid-template-columns:1fr 1fr;gap:5px"><div class="blk img" style="aspect-ratio:4/5"></div><div class="blk img" style="aspect-ratio:4/5"></div></div></div>
+      <div class="pad" style="padding:8px 10px;background:var(--bg-2)"><span class="ln" style="width:80%"></span><span class="ln" style="width:60%"></span></div>
+      <div class="blk dark" style="height:14px;margin:8px 10px;border-radius:2px"></div>
+    </div></div>
+    <div class="boardside">
+      <div class="tablewrap"><table>
+        <thead><tr><th>斷點</th><th>寬度</th><th>版面</th></tr></thead>
+        <tbody>
+          <tr><td>手機</td><td class="mono">&lt; 640px</td><td>單欄；幼貓卡兩欄；導覽收進全屏選單；主按鈕全寬置底固定</td></tr>
+          <tr><td>平板</td><td class="mono">640–1024px</td><td>幼貓卡三欄；詳情頁圖上文下；側邊距 32px</td></tr>
+          <tr><td>桌機</td><td class="mono">&gt; 1024px</td><td>內容欄 1180px；幼貓卡四欄；詳情頁左圖右文、右欄固定</td></tr>
+        </tbody>
+      </table></div>
+      <div><div class="k">MOTION</div><h4>動效原則</h4>
+        <ul><li>只有三種動效：區塊進場淡入上移 12px（400ms）、照片懸停放大 3%（600ms）、手風琴展開（250ms）。</li><li>緩動一律 cubic-bezier(.2,.7,.2,1)，不用彈跳。</li><li>尊重系統「減少動態效果」設定時全部關閉。</li><li>不做視差、不做滑鼠跟隨、不做自動輪播。</li></ul></div>
+      <div><div class="k">PERFORMANCE</div><h4>效能目標</h4><p>首頁 LCP 2.5 秒內（4G），圖片一律延遲載入並給定尺寸避免跳動，字體採 swap 顯示。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 -->
+<section id="s12">
+  <div class="sec-head"><div class="num">12</div><div><h2>技術與部署建議</h2><p>對應報價單專區 6。技術選型以「客戶自行上架免費」為前提，後台必須夠簡單、主機費用必須夠低。</p></div></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>層級</th><th>建議</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td>前端</td><td class="mono">Next.js（App Router）＋ TypeScript</td><td>靜態產生幼貓與種貓頁，SEO 與載入速度好；狀態更新時增量重新產生</td></tr>
+      <tr><td>樣式</td><td class="mono">CSS 變數 token ＋ Tailwind 或 CSS Modules</td><td>本設計書第 02 章的 token 可直接落為 CSS 變數</td></tr>
+      <tr><td>內容與後台</td><td class="mono">Supabase（Postgres、Auth、Storage）自建後台，或 Sanity / Payload CMS</td><td>以「胎、幼貓、種貓、詢問」四張表建模；圖片轉檔在上傳時處理</td></tr>
+      <tr><td>圖片</td><td class="mono">Next/Image ＋ 物件儲存 ＋ CDN</td><td>自動 WebP 與多尺寸，首頁大圖預載</td></tr>
+      <tr><td>部署</td><td class="mono">Vercel 或 Cloud Run，自訂網址，Let's Encrypt HTTPS</td><td>免費或低月費方案即可承載貓舍流量；網址與主機年費由客戶負擔</td></tr>
+      <tr><td>通知</td><td class="mono">表單送出寄 Email 給主人（SMTP relay）</td><td>Line 自動通知不在本次範圍，日後可加</td></tr>
+      <tr><td>上線檢查</td><td class="mono">Lighthouse、各裝置實機測試、表單端到端測試、OG 預覽驗證</td><td>對應報價單「基本測試與上線檢查」</td></tr>
+    </tbody>
+  </table></div>
+  <h3>資料模型（概要）</h3>
+  <div class="grid g4">
+    <div class="note"><div class="eyebrow">Cat 種貓</div><p class="mono">name, reg_name, role(king/queen), breed, color, sex, birth, blood_type, bio, photos[], documents[](pedigree/vaccine/genetic), tests{PKD, HCM, FIV, FeLV…}</p></div>
+    <div class="note"><div class="eyebrow">Litter 胎</div><p class="mono">sire_id, dam_id, birth, season_label, note, published</p></div>
+    <div class="note"><div class="eyebrow">Kitten 幼貓</div><p class="mono">litter_id, name, slug, sex, color, status(available/reserved/adopted), leave_date, checklist{vaccine,deworm,chip,genetic}, photos[], video, published</p></div>
+    <div class="note"><div class="eyebrow">Inquiry 詢問</div><p class="mono">type(inquiry/waitlist), kitten_id?, name, contact, preference, env, experience, visit_time, state(new/contacted/closed), created_at</p></div>
+  </div>
+</section>
+
+<!-- 13 -->
+<section id="s13">
+  <div class="sec-head"><div class="num">13</div><div><h2>範圍、交付與階段</h2><p>與報價單的對應關係、明確不包含的項目，以及三期付款對應的交付物。</p></div></div>
+  <h3>報價專區對應本設計書章節</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>報價單專區</th><th>難度</th><th>本書章節</th><th>主要交付</th></tr></thead>
+    <tbody>
+      <tr><td>1. 品牌形象首頁</td><td><span class="tag">低</span></td><td class="mono">05 · 11</td><td>首頁六區塊、響應式三斷點</td></tr>
+      <tr><td>2. 幼貓找家</td><td><span class="tag">中高</span></td><td class="mono">03 · 06 · 10</td><td>列表、詳情、狀態、表單、候補、領養流程、後台上下架</td></tr>
+      <tr><td>3. 種公種母介紹</td><td><span class="tag">中</span></td><td class="mono">07 · 10</td><td>總覽、個別頁、文件卡、後代牆、後台新增修改</td></tr>
+      <tr><td>4. 關於我們</td><td><span class="tag">低</span></td><td class="mono">08</td><td>理念、證照、FAQ、見證、相簿</td></tr>
+      <tr><td>5. 社群整合</td><td><span class="tag">低</span></td><td class="mono">09</td><td>IG 動態、Line／FB、分享預覽、GA4、SEO</td></tr>
+      <tr><td>6. 部署設定</td><td><span class="tag">低</span></td><td class="mono">12</td><td>上線、網址與 HTTPS、測試、帳號與教學</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>三期交付物</h3>
+  <div class="phases">
+    <div class="phase"><div class="k">PHASE 1 · 30%</div><h4>合約簽署後</h4><ul><li>本設計書定稿、視覺 token 確認</li><li>首頁與幼貓列表高保真視覺稿</li><li>資料模型與後台欄位確認</li></ul></div>
+    <div class="phase"><div class="k">PHASE 2 · 40%</div><h4>測試版交付</h4><ul><li>全部前台頁面可瀏覽（測試網址）</li><li>後台可上架幼貓、種貓與公告</li><li>表單送出可收到 Email</li><li>客戶開始填入真實內容試用</li></ul></div>
+    <div class="phase"><div class="k">PHASE 3 · 30%</div><h4>正式上線驗收</h4><ul><li>正式網址與 HTTPS</li><li>SEO、OG、GA4 驗證</li><li>帳號建立與操作教學（錄影）</li><li>驗收單簽署</li></ul></div>
+  </div>
+
+  <h3>明確不包含（依報價單注意事項）</h3>
+  <ul class="list">
+    <li>線上付款與訂金刷卡。</li>
+    <li>Line 帳號登入、Line 自動通知訊息。</li>
+    <li>貓咪照片、影片、文案與品牌素材的製作；本書只規範比例與調性。</li>
+    <li>網址、主機、雲端空間年費。</li>
+    <li>版面視覺設計費：本設計書為提案方向，若需設計師產出完整高保真稿另行報價。</li>
+  </ul>
+
+  <h3>待業主確認的事項</h3>
+  <ul class="list">
+    <li>貓舍正式名稱、英文名與是否已有 Logo；若無，本書以 Cormorant 字體排印的「Qiqi Cattery」作為暫定字標。</li>
+    <li>主要繁育品種（本書以英國短毛貓為示意，會影響配色調性與照片風格）。</li>
+    <li>幼貓是否公開顯示價格區間，或僅於詢問後告知。</li>
+    <li>已送養幼貓是否保留在列表中以灰階顯示，或僅進入送養相簿。</li>
+    <li>後台偏好自建（Supabase）或使用現成 CMS。</li>
+  </ul>
+</section>
+
+</main>
+</div>
+
+<footer class="wrap">
+  <span>Qiqi Cattery 網站設計書 · v1.0 · 2026-11-09</span>
+  <span>依據報價單 QT-2026-002 功能明細撰寫，供雙方確認設計方向</span>
+</footer>
+</div>
+
+</body>
+</html>
