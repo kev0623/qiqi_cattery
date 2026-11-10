@@ -529,26 +529,13 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
 <script>
 /* ---------- Data ---------- */
 const TODAY = new Date('2026-11-09');
-const cats = {
-  atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Zhubei',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',img:'atlas.jpg',
-    bio:'Atlas 是貓舍的第一隻種公，骨架圓厚、耳位低，個性穩重到近乎懶散。他會在產房外守著每一胎幼貓，是孩子們最早學會信任的大人。',
-    tests:[['PKD（多囊腎）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['FIV / FeLV','陰性','2026-01-12 · 安心動物醫院'],['血型','A 型','2023-09-20']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0418'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-01-12'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-02-03']]},
-  luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Zhubei',role:'queen',breed:'英國短毛貓',color:'金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',img:'luna.jpg',
-    bio:'Luna 是溫暖的金漸層，毛尖帶一點深色，眼睛是少見的湖綠。她是很有主見的母親，會自己決定讓誰靠近產房。',
-    tests:[['PKD（多囊腎）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['FIV / FeLV','陰性','2026-02-20 · 安心動物醫院'],['血型','A 型','2024-03-15']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-1002'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-02-20'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-06-11']]},
-  coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍乳白三色',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',img:'coco.jpg',
-    bio:'Coco 臉上的白色倒 V 對稱得像畫上去的。個性黏人，喜歡跟著人走來走去，她的孩子通常也最快學會撒嬌。',
-    tests:[['PKD（多囊腎）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['FIV / FeLV','陰性','2026-03-02 · 安心動物醫院'],['血型','A 型','2024-01-10']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0627'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-03-02'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-03-08']]},
-};
 /* 幼貓與胎的資料由 data/site.json 載入（後台 admin.html 會改寫這個檔）。未上架的胎不顯示。 */
-let litters = {}, kittens = [];
+let cats = {}, litters = {}, kittens = [];
 async function loadData(){
   try {
     const r = await fetch('data/site.json?t=' + Date.now(), {cache:'no-store'}); if (!r.ok) throw new Error(r.status);
     const d = await r.json();
+    cats = d.cats || {};
     litters = Object.fromEntries(Object.entries(d.litters||{}).filter(([,l])=>l.published));
     kittens = (d.kittens||[]).filter(k=>litters[k.litter]);
   } catch(e) { console.warn('載入 data/site.json 失敗', e); }
@@ -654,7 +641,7 @@ views.kitten = slug => {
 views.cats = () => {
   const g = role => Object.values(cats).filter(c=>c.role===role).map(c=>`<a class="ccard" href="#cat-${c.slug}">${ph(c.v,'','',c.img,alt(c))}<div class="name">${c.name}</div><div class="sub">英國短毛貓 · ${c.color} · ${c.birth.slice(0,4)} 年生</div></a>`).join('');
   return `
-  <section class="page-head"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / 種公種母</div><h1>種公種母</h1><p>三隻種貓都通過 PKD 與 HCM 基因檢測，血統書與報告原件可在各自頁面查看。</p></div></section>
+  <section class="page-head"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / 種公種母</div><h1>種公種母</h1><p>所有種貓都通過 PKD 與 HCM 基因檢測，血統書與報告原件可在各自頁面查看。</p></div></section>
   <section><div class="wrap">
     <div class="cat-group"><h2>種公<small>Kings</small></h2><div class="grid g3">${g('king')}</div></div>
     <div class="cat-group"><h2>種母<small>Queens</small></h2><div class="grid g3">${g('queen')}</div></div>
@@ -668,14 +655,14 @@ views.cat = slug => {
   <section class="page-head" style="padding-bottom:24px"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / <a href="#cats">種公種母</a> / ${c.name}</div></div></section>
   <section class="wrap cat-hero">${ph(c.v,'wide',`<div class="over"><span>${c.role==='king'?'KING':'QUEEN'}</span><h1>${c.name}</h1></div>`,c.img,alt(c))}</section>
   <section class="wrap cat-body">
-    <div class="bio"><h2 style="font-size:26px">${c.reg}</h2><p>${c.bio}</p><p>${c.name} 目前 ${ageText(c.birth)}，${c.role==='king'?'已有四胎後代':'一年最多生一胎，每胎間隔至少一年'}。</p></div>
+    <div class="bio"><h2 style="font-size:26px">${c.reg||c.name}</h2><p>${c.bio||''}</p><p>${c.name} 目前 ${ageText(c.birth)}，${c.role==='king'?`已有 ${ls.length} 胎後代`:'一年最多生一胎，每胎間隔至少一年'}。</p></div>
     <div class="datacard"><h3>資料</h3><table>
-      <tr><td>登錄名</td><td>${c.reg}</td></tr><tr><td>品種</td><td>${c.breed}</td></tr><tr><td>花色</td><td>${c.color}</td></tr><tr><td>性別</td><td>${c.sex}</td></tr><tr><td>出生日期</td><td><span class="mono">${fmt(c.birth)}</span></td></tr>
-      ${c.tests.map(t=>`<tr><td>${t[0]}</td><td><span class="result">${t[1]}</span><br><span class="mono" style="color:var(--fg-3)">${t[2]}</span></td></tr>`).join('')}
+      <tr><td>登錄名</td><td>${c.reg||'—'}</td></tr><tr><td>品種</td><td>${c.breed||'英國短毛貓'}</td></tr><tr><td>花色</td><td>${c.color}</td></tr><tr><td>性別</td><td>${c.sex}</td></tr><tr><td>出生日期</td><td><span class="mono">${fmt(c.birth)}</span></td></tr>
+      ${(c.tests||[]).map(t=>`<tr><td>${t[0]}</td><td><span class="result">${t[1]}</span><br><span class="mono" style="color:var(--fg-3)">${t[2]}</span></td></tr>`).join('')}
     </table></div>
   </section>
-  <section class="section tight stone"><div class="wrap">${secTitle('文件','點擊查看掃描原件。')}
-    <div class="docs">${c.docs.map((d,i)=>`<button class="doc" data-doc="${slug}:${i}"><b>${d[0]}</b><span>${d[1]}</span><span class="mono">${d[2]}</span><span class="open">查看原件</span></button>`).join('')}</div></div></section>
+  ${(c.docs||[]).length ? `<section class="section tight stone"><div class="wrap">${secTitle('文件','點擊查看掃描原件。')}
+    <div class="docs">${c.docs.map((d,i)=>`<button class="doc" data-doc="${slug}:${i}"><b>${d[0]}</b><span>${d[1]}</span><span class="mono">${d[2]}</span><span class="open">查看原件</span></button>`).join('')}</div></div></section>` : ''}
   <section class="section"><div class="wrap">${secTitle('歷代後代',`${c.name} 共有 ${ls.length} 胎、${kittens.filter(k=>lids.includes(k.litter)).length} 個孩子。`)}
     <div class="offspring">${kittens.filter(k=>lids.includes(k.litter)).map(k=>`<a href="#kitten-${k.slug}">${ph(k.v,'sq','',k.img,alt(k,'幼貓'))}<span><b>${k.name}</b>${fmt(litters[k.litter].birth).slice(0,7)}</span></a>`).join('')}</div></div></section>`;
 };
