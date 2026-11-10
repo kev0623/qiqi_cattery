@@ -197,8 +197,11 @@ let draft = null, log = [], images = {};  // 草稿、變更摘要、待上傳�
 let tab = 'kittens', busy = false;
 
 /* ---------- GitHub ---------- */
+const ON_SITE = location.hostname.endsWith('github.io');
 async function gh(path, opts={}) {
-  const r = await fetch(`https://api.github.com/repos/${REPO}/${path}`, { ...opts, headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${token}`, 'X-GitHub-Api-Version':'2022-11-28', ...(opts.headers||{}) } });
+  let r;
+  try { r = await fetch(`https://api.github.com/repos/${REPO}/${path}`, { ...opts, headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${token}`, 'X-GitHub-Api-Version':'2022-11-28', ...(opts.headers||{}) } }); }
+  catch(e) { throw new Error(ON_SITE ? '連不上 GitHub，請確認網路後再試。' : `這個預覽環境無法連線 GitHub，請改用正式網址開啟後台：${SITE_URL}admin.html`); }
   if (!r.ok) { const e = new Error(r.status===401 ? '金鑰無效或已過期，請到「設定」重新貼上。' : r.status===403 ? '這把金鑰沒有寫入權限。' : r.status===404 ? '找不到檔案或沒有權限。' : `GitHub 回應 ${r.status}`); e.status = r.status; throw e; }
   return r.json();
 }
@@ -257,6 +260,7 @@ function viewKittens(){
 function viewSettings(){
   return `
   <div class="head"><div><h1>設定</h1><div class="meta">金鑰只存在這台裝置的瀏覽器裡。</div></div></div>
+  ${ON_SITE ? '' : `<div class="band"><span>這裡是預覽環境，無法連線 GitHub 發佈。請改用正式網址操作。</span><a href="${SITE_URL}admin.html" target="_blank" rel="noopener">開啟正式後台</a></div>`}
   <div class="card"><h2>發佈金鑰</h2><p>由網站管理者提供。貼上後按儲存，之後在這台裝置就不用再輸入。</p>
     <div class="field" style="margin-top:14px"><label for="tokenInput">金鑰</label><input id="tokenInput" type="password" autocomplete="off" placeholder="github_pat_…" value="${esc(token)}"></div>
     <div class="acts"><button class="btn" id="saveToken">儲存金鑰</button>${token?'<button class="btn ghost" id="clearToken">清除金鑰</button>':''}</div></div>
