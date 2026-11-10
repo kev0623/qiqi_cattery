@@ -215,6 +215,12 @@ main{min-height:60vh}
   repeating-linear-gradient(90deg,transparent 0 38px,var(--line) 38px 39px),var(--bg-2);position:relative}
 .map .pin{position:absolute;left:52%;top:46%;width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px color-mix(in srgb,var(--accent) 20%,transparent)}
 .map .lbl{position:absolute;left:16px;bottom:14px;font-size:12.5px;color:var(--fg-2);background:var(--card);padding:4px 10px;border-radius:4px;border:1px solid var(--line)}
+.map{overflow:hidden}
+.map iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;z-index:1;background:transparent}
+.map .fallback{position:absolute;inset:0;z-index:0;display:block}
+.map .open{position:absolute;right:12px;top:12px;z-index:2;font-size:12.5px;background:var(--card);color:var(--fg);padding:6px 12px;border-radius:4px;border:1px solid var(--line);box-shadow:var(--shadow)}
+.map .open:hover{color:var(--accent)}
+@media (max-width:760px){.map{aspect-ratio:4/3}}
 
 /* Page header */
 .page-head{padding-block:64px 40px}
@@ -621,7 +627,7 @@ views.home = () => {
     <div><h2 style="font-size:30px">聯絡與參觀</h2><p style="color:var(--fg-2);margin-top:14px;max-width:30em">參觀採預約制，每個時段只接待一組家庭。最快的方式是加 Line 跟我們聊聊，或填寫預約表單。</p>
       <dl><dt>Line 官方帳號</dt><dd><span class="mono">@252djadk</span></dd><dt>Instagram</dt><dd><a class="link" href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener"><span class="mono">@qiqi_2877</span></a></dd><dt>Facebook</dt><dd><a class="link" href="https://www.facebook.com/p/%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D-Meow-x-Qi-Qi-cattery-61591605988475/" target="_blank" rel="noopener">錡錡貓舍 Meow x Qi Qi cattery</a></dd><dt>參觀時段</dt><dd>週六下午、週日上午</dd><dt>地址</dt><dd>302 新竹縣竹北市中華路 288 號</dd></dl>
       <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap"><a class="btn" href="#inquiry">預約看貓</a><a class="btn ghost" href="https://line.me/R/ti/p/@252djadk" target="_blank" rel="noopener">加入 Line</a><a class="btn ghost" href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener">Instagram</a></div></div>
-    <a class="map" href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener" aria-label="在 Google 地圖開啟錡錡貓舍"><div class="pin"></div><div class="lbl">錡錡貓舍 · 竹北市中華路 288 號 · 開啟 Google 地圖</div></a>
+    <div class="map"><a class="fallback" href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener" aria-label="在 Google 地圖開啟錡錡貓舍"><div class="pin"></div><div class="lbl">錡錡貓舍 · 竹北市中華路 288 號</div></a><iframe src="https://www.google.com/maps?q=%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D+302%E6%96%B0%E7%AB%B9%E7%B8%A3%E7%AB%B9%E5%8C%97%E5%B8%82%E4%B8%AD%E8%8F%AF%E8%B7%AF288%E8%99%9F&z=16&hl=zh-TW&output=embed" title="錡錡貓舍位置地圖" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe><a class="open" href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener">在 Google 地圖中開啟</a></div>
   </div></section>`;
 };
 
