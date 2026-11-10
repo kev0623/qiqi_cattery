@@ -18,3 +18,4 @@ wrap() { # $1 來源  $2 輸出
 wrap prototype/index.html index.html
 wrap docs/design-spec.html design.html
 touch .nojekyll
+rm -rf img && cp -R prototype/img img && echo "copied img/"

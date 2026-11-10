@@ -118,6 +118,20 @@ img{max-width:100%}
 .ph.v4{--fur-a:#D6D3D0;--fur-b:#ABA9AA;--fur-c:#7A7679}
 .ph.v5{--fur-a:#DDD5CB;--fur-b:#BBA98F;--fur-c:#8E7B62}
 .ph.muted{filter:saturate(.25) opacity(.8)}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s var(--ease)}
+.ph.photo::after{display:none}
+.hero .ph.photo::after{display:block}
+.kcard:hover .ph img{transform:scale(1.03)}
+.cat-hero .ph.photo::after{display:block;background:linear-gradient(180deg,transparent 45%,rgba(20,18,14,.62))}
+.cat-hero .ph.photo .over span{color:rgba(255,255,255,.75)}
+.cat-hero .ph.photo .over h1{color:#fff}
+.lightbox .doc-ph{overflow:hidden}
+.credits{font-size:12px;color:color-mix(in srgb,var(--bg) 55%,transparent);padding-block:0 28px}
+.credits summary{list-style:none;cursor:pointer;display:inline;font-family:var(--body);font-size:12.5px;font-weight:400;padding:0;border-bottom:1px solid color-mix(in srgb,var(--bg) 30%,transparent)}
+.credits summary::after{content:none}
+.credits ul{margin:14px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px 24px;line-height:1.6}
+.credits a{color:inherit;border-bottom:1px solid color-mix(in srgb,var(--bg) 25%,transparent)}
+.credits a:hover{color:var(--accent-2)}
 .ph .credit{position:absolute;right:10px;bottom:8px;font-size:10.5px;letter-spacing:.08em;color:var(--fg);opacity:.5}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .ph.v1,:root:not([data-theme="light"]) .ph.v2,:root:not([data-theme="light"]) .ph.v3,:root:not([data-theme="light"]) .ph.v4,:root:not([data-theme="light"]) .ph.v5{--fur-a:#3A362F;--fur-b:#4E4840;--fur-c:#6B6357} }
 :root[data-theme="dark"] .ph.v1,:root[data-theme="dark"] .ph.v2,:root[data-theme="dark"] .ph.v3,:root[data-theme="dark"] .ph.v4,:root[data-theme="dark"] .ph.v5{--fur-a:#3A362F;--fur-b:#4E4840;--fur-c:#6B6357}
@@ -495,6 +509,7 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
     <div><h4>聯絡</h4><ul><li>Line 官方帳號 <span class="mono">@qiqicattery</span></li><li><a href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener">Instagram <span class="mono">@qiqi_2877</span></a></li><li><a href="https://www.facebook.com/p/%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D-Meow-x-Qi-Qi-cattery-61591605988475/" target="_blank" rel="noopener">Facebook 錡錡貓舍 Meow x Qi Qi cattery</a></li><li><a href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener">302 新竹縣竹北市中華路 288 號，在 Google 地圖查看</a></li></ul></div>
   </div>
   <div class="legal"><div class="wrap"><span>© 2026 錡錡貓舍 Qiqi Cattery</span><span>特定寵物業許可證 新竹縣特寵業繁字第 000000 號</span></div></div>
+  <div class="wrap credits"><details><summary>示意照片來源與授權</summary><ul><li><a href="https://commons.wikimedia.org/wiki/File:Kitten_on_piano.jpg" target="_blank" rel="noopener">Kitten on piano</a>，Bici，CC0</li><li><a href="https://commons.wikimedia.org/wiki/File:Golden_Rebel_D%27Oaxaca_of_Feliland_4_months.JPG" target="_blank" rel="noopener">Golden Rebel D'Oaxaca of Feliland</a>，Feliland，CC BY-SA 3.0</li><li><a href="https://commons.wikimedia.org/wiki/File:British_Shorthair_tricolore.jpg" target="_blank" rel="noopener">British Shorthair tricolore</a>，Pascal，CC BY-SA 3.0</li><li><a href="https://commons.wikimedia.org/wiki/File:BRI_(3099326255).jpg" target="_blank" rel="noopener">BRI (3099326255)</a>，Nickolas Titkov，CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:BRI_%D0%9B%D0%B8%D0%B2%D0%B5%D1%80%D0%BF%D1%83%D0%BB%D1%8C_%D0%9C%D0%B8%D1%88%D0%B5%D0%BB%D1%8C_(5648573224).jpg" target="_blank" rel="noopener">BRI Ливерпуль Мишель</a>，Nickolas Titkov，CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:British_Shorthair_Cat.JPG" target="_blank" rel="noopener">British Shorthair Cat</a>，Cav.web20，CC BY-SA 3.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Shorthair_british_cat1.jpg" target="_blank" rel="noopener">Shorthair british cat1</a>，Hedvika Lavičková，CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Shorthair_british_cat2.jpg" target="_blank" rel="noopener">Shorthair british cat2</a>，Hedvika Lavičková，CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:A_baby_british_cat.jpg" target="_blank" rel="noopener">A baby british cat</a>，Efeser2009，CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Kitten_(5499148600).jpg" target="_blank" rel="noopener">Kitten (5499148600)</a>，ponafotkas，CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Kitten_(5499148772).jpg" target="_blank" rel="noopener">Kitten (5499148772)</a>，ponafotkas，CC BY-SA 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:12_Week_Old_White_British_Shorthair_Kitten.jpg" target="_blank" rel="noopener">12 Week Old White British Shorthair Kitten</a>，Takipoint123，CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:Silver_%26_white_kittens_(7687774432).jpg" target="_blank" rel="noopener">Silver & white kittens</a>，Ms Salo，CC BY 2.0</li><li><a href="https://commons.wikimedia.org/wiki/File:NASHKA.jpg" target="_blank" rel="noopener">NASHKA</a>，POSEIDON69，CC BY-SA 4.0</li><li><a href="https://commons.wikimedia.org/wiki/File:British_Shorthair_cat_on_September_25,_2021_(cropped_2023).jpg" target="_blank" rel="noopener">British Shorthair cat on September 25, 2021 (cropped)</a>，George E. Koronaios，CC BY-SA 4.0</li></ul><p style="margin-top:12px;max-width:none;font-size:12px">原型階段使用 Wikimedia Commons 上的創用 CC 授權照片作為示意，正式上線時全數替換為貓舍自有照片。</p></details></div>
 </footer>
 
 <a class="line-fab" href="https://line.me/R/ti/p/@qiqicattery" target="_blank" rel="noopener">LINE</a>
@@ -512,17 +527,17 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
 /* ---------- Data ---------- */
 const TODAY = new Date('2026-11-09');
 const cats = {
-  atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Zhubei',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',
+  atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Zhubei',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',img:'atlas.jpg',
     bio:'Atlas 是貓舍的第一隻種公，骨架圓厚、耳位低，個性穩重到近乎懶散。他會在產房外守著每一胎幼貓，是孩子們最早學會信任的大人。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['FIV / FeLV','陰性','2026-01-12 · 安心動物醫院'],['血型','A 型','2023-09-20']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0418'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-01-12'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-02-03']],
     litters:['L2026A','L2026B','L2025A','L2025B']},
-  luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',
-    bio:'Luna 的毛色是淡淡的香檳金底帶藍色漸層，眼睛是少見的湖綠。她是很有主見的母親，會自己決定讓誰靠近產房。',
+  luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Zhubei',role:'queen',breed:'英國短毛貓',color:'金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',img:'luna.jpg',
+    bio:'Luna 是溫暖的金漸層，毛尖帶一點深色，眼睛是少見的湖綠。她是很有主見的母親，會自己決定讓誰靠近產房。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['FIV / FeLV','陰性','2026-02-20 · 安心動物醫院'],['血型','A 型','2024-03-15']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-1002'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-02-20'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-06-11']],
     litters:['L2026A','L2025B']},
-  coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍白',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',
+  coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍乳白三色',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',img:'coco.jpg',
     bio:'Coco 臉上的白色倒 V 對稱得像畫上去的。個性黏人，喜歡跟著人走來走去，她的孩子通常也最快學會撒嬌。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['FIV / FeLV','陰性','2026-03-02 · 安心動物醫院'],['血型','A 型','2024-01-10']],
     docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0627'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-03-02'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-03-08']],
@@ -535,17 +550,17 @@ const litters = {
   L2025B:{id:'L2025B',dam:'luna',sire:'atlas',birth:'2025-04-20',season:'2025 春',leave:'2025-07-13',published:true},
 };
 const kittens = [
-  {slug:'hazel',name:'Hazel',litter:'L2026A',sex:'女生',color:'藍金漸層',status:'available',v:'v3',one:'一胎裡最先睜眼、也最先爬出產箱的孩子。',check:{vaccine:1,deworm:1,chip:0,genetic:1},video:true},
-  {slug:'oslo',name:'Oslo',litter:'L2026A',sex:'男生',color:'藍金漸層',status:'reserved',v:'v5',one:'圓臉圓眼，吃飽就睡，睡醒就找人。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
-  {slug:'pepper',name:'Pepper',litter:'L2026A',sex:'女生',color:'藍白',status:'available',v:'v4',one:'額頭上有一小撮白，個性最安靜。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
-  {slug:'milo',name:'Milo',litter:'L2026B',sex:'男生',color:'藍白',status:'adopted',v:'v4',one:'已經在台中的新家當老大。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'nori',name:'Nori',litter:'L2026B',sex:'女生',color:'藍色',status:'adopted',v:'v2',one:'新家有一隻柴犬，兩週就成了朋友。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'juno',name:'Juno',litter:'L2026B',sex:'男生',color:'藍白',status:'adopted',v:'v1',one:'最愛窗邊曬太陽。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'bean',name:'Bean',litter:'L2025A',sex:'女生',color:'藍白',status:'adopted',v:'v4',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'mochi',name:'Mochi',litter:'L2025A',sex:'男生',color:'藍色',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'sage',name:'Sage',litter:'L2025B',sex:'女生',color:'藍金漸層',status:'adopted',v:'v3',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'teddy',name:'Teddy',litter:'L2025B',sex:'男生',color:'藍金漸層',status:'adopted',v:'v5',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'ollie',name:'Ollie',litter:'L2025B',sex:'男生',color:'藍色',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'hazel',name:'Hazel',litter:'L2026A',sex:'女生',color:'銀漸層',img:'hazel.jpg',status:'available',v:'v3',one:'一胎裡最先睜眼、也最先爬出產箱的孩子。',check:{vaccine:1,deworm:1,chip:0,genetic:1},video:true},
+  {slug:'oslo',name:'Oslo',litter:'L2026A',sex:'男生',color:'藍色',img:'oslo.jpg',status:'reserved',v:'v5',one:'圓臉圓眼，吃飽就睡，睡醒就找人。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
+  {slug:'pepper',name:'Pepper',litter:'L2026A',sex:'女生',color:'藍白',img:'pepper.jpg',status:'available',v:'v4',one:'額頭上有一小撮白，個性最安靜。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
+  {slug:'milo',name:'Milo',litter:'L2026B',sex:'男生',color:'藍乳白',img:'milo.jpg',status:'adopted',v:'v4',one:'已經在台中的新家當老大。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'nori',name:'Nori',litter:'L2026B',sex:'女生',color:'銀虎斑',img:'nori.jpg',status:'adopted',v:'v2',one:'新家有一隻柴犬，兩週就成了朋友。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'juno',name:'Juno',litter:'L2026B',sex:'男生',color:'淡紫',img:'juno.jpg',status:'adopted',v:'v1',one:'最愛窗邊曬太陽。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'bean',name:'Bean',litter:'L2025A',sex:'女生',color:'白色',img:'bean.jpg',status:'adopted',v:'v4',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'mochi',name:'Mochi',litter:'L2025A',sex:'男生',color:'白色',img:'mochi.jpg',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'sage',name:'Sage',litter:'L2025B',sex:'女生',color:'銀虎斑白',img:'sage.jpg',status:'adopted',v:'v3',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'teddy',name:'Teddy',litter:'L2025B',sex:'男生',color:'乳色',img:'teddy.jpg',status:'adopted',v:'v5',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
+  {slug:'ollie',name:'Ollie',litter:'L2025B',sex:'男生',color:'白色',img:'ollie.jpg',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
 ];
 const news = [
   {date:'2026-11-02',tag:'新胎公告',title:'Luna 與 Atlas 的孩子開放預約',body:'9 月 14 日出生的三隻幼貓已滿 7 週，照片與影片已更新至幼貓找家。預計 12 月 7 日起陸續離家。'},
@@ -570,10 +585,11 @@ const STATUS = {available:'可預約',reserved:'已預訂',adopted:'已送養'};
 const fmt = d => d.replace(/-/g,'.');
 const weeks = d => Math.floor((TODAY - new Date(d))/(7*864e5));
 const ageText = d => { const w = weeks(d); if (w < 20) return `${w} 週齡`; const m = Math.floor(w/4.345); if (m < 24) return `${m} 個月`; return `${Math.floor(m/12)} 歲`; };
-const ph = (v,cls='',extra='') => `<div class="ph ${v||''} ${cls}">${extra}<svg aria-hidden="true"><use href="#cat"/></svg></div>`;
+const ph = (v,cls='',extra='',img=null,alt='') => img ? `<div class="ph photo ${cls}"><img src="img/${img}" alt="${alt}" loading="lazy">${extra}</div>` : `<div class="ph ${v||''} ${cls}">${extra}<svg aria-hidden="true"><use href="#cat"/></svg></div>`;
 const pill = s => `<span class="pill ${s}">${STATUS[s]}</span>`;
 const litterTitle = l => `${cats[l.dam].name} 的孩子`;
-const kcard = k => { const l = litters[k.litter]; return `<a class="kcard" href="#kitten-${k.slug}">${ph(k.v,k.status==='adopted'?'muted':'',pill(k.status))}<div class="body"><div class="name">${k.name}</div><div class="sub">英國短毛貓 · ${k.color} · ${k.sex}</div><div class="row"><span class="mono">${fmt(l.birth)} 出生</span><span>${k.status==='adopted'?'已到新家':ageText(l.birth)}</span></div></div></a>`; };
+const alt = (x,kind='') => `${x.name}，${x.color}英國短毛貓${kind}`;
+const kcard = k => { const l = litters[k.litter]; return `<a class="kcard" href="#kitten-${k.slug}">${ph(k.v,k.status==='adopted'?'muted':'',pill(k.status),k.img,alt(k,'幼貓'))}<div class="body"><div class="name">${k.name}</div><div class="sub">英國短毛貓 · ${k.color} · ${k.sex}</div><div class="row"><span class="mono">${fmt(l.birth)} 出生</span><span>${k.status==='adopted'?'已到新家':ageText(l.birth)}</span></div></div></a>`; };
 const secTitle = (h,p,right='') => `<div class="sec-title"><div><h2>${h}</h2>${p?`<p>${p}</p>`:''}</div>${right}</div>`;
 
 /* ---------- Views ---------- */
@@ -581,7 +597,7 @@ const views = {};
 views.home = () => {
   const live = kittens.filter(k => k.status !== 'adopted').slice(0,4);
   return `
-  <section class="hero"><div class="wrap">${ph('v1','wide','<span class="credit">照片由貓舍提供</span>')}</div>
+  <section class="hero"><div class="wrap">${ph('v1','wide','',  'hero.jpg','三隻英國短毛貓幼貓坐在鋼琴上')}</div>
     <div class="copy"><div class="inner"><h1>讓每一隻貓，都在被期待中出生</h1><p class="sub">家庭式繁育的英國短毛貓舍。每一胎都在家中出生、與人共同生活，滿 12 週才離家。</p><div class="acts"><a class="btn" href="#kittens">看看本季幼貓</a><a class="link" href="#adopt">了解領養流程</a></div></div></div>
   </section>
   <section class="section"><div class="wrap story">
@@ -631,20 +647,20 @@ views.kitten = slug => {
   return `
   <section class="page-head" style="padding-bottom:0"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / <a href="#kittens">幼貓找家</a> / ${k.name}</div></div></section>
   <section class="wrap detail">
-    <div class="gallery">${ph(k.v,k.status==='adopted'?'muted':'','<span class="credit">攝於 7 週齡</span>')}<div class="thumbs">${ph(k.v,'on')}${ph('v1')}${ph('v5')}${ph('v2')}${k.video?'<div class="video">影片</div>':ph('v4')}</div></div>
+    <div class="gallery">${ph(k.v,'main '+(k.status==='adopted'?'muted':''),'<span class="credit">示意照片</span>',k.img,alt(k,'幼貓'))}<div class="thumbs">${[k, ...sibs, cats[l.dam]].slice(0,4).map((x,i)=>ph(x.v,i===0?'on':'','',x.img,alt(x))).join('')}${k.video?'<div class="video">影片</div>':ph(cats[l.sire].v,'','',cats[l.sire].img,alt(cats[l.sire]))}</div></div>
     <div class="info">${pill(k.status)}<h1>${k.name}</h1><p class="one">${k.one||'正在新家過得很好。'}</p>
       <div class="facts"><div><span>品種</span><b>英國短毛貓</b></div><div><span>花色</span><b>${k.color}</b></div><div><span>性別</span><b>${k.sex}</b></div><div><span>出生日期</span><b class="mono">${fmt(l.birth)}</b></div><div><span>目前</span><b>${k.status==='adopted'?'已到新家':ageText(l.birth)}</b></div><div><span>預計離家日</span><b class="mono">${fmt(l.leave)}</b></div></div>
       <div class="check"><h4>離家前完成項目</h4><ul>${checks.map(([key,label])=>`<li class="${k.check[key]?'done':'todo'}"><i>${k.check[key]?'✓':''}</i>${label}${k.check[key]?'':'（離家前完成）'}</li>`).join('')}</ul></div>
       <div class="cta">${cta}</div></div>
   </section>
   <section class="section tight lineage"><div class="wrap">${secTitle('父母與手足')}
-    <div class="grid g3"><a href="#cat-${l.sire}">${ph(cats[l.sire].v)}<div class="who"><span>父</span><b>${cats[l.sire].name}</b><span>${cats[l.sire].color}</span></div></a><a href="#cat-${l.dam}">${ph(cats[l.dam].v)}<div class="who"><span>母</span><b>${cats[l.dam].name}</b><span>${cats[l.dam].color}</span></div></a>${sibs.map(s=>`<a href="#kitten-${s.slug}">${ph(s.v)}<div class="who"><span>手足</span><b>${s.name}</b><span>${STATUS[s.status]} · ${s.color}</span></div></a>`).join('')}</div>
+    <div class="grid g3"><a href="#cat-${l.sire}">${ph(cats[l.sire].v,'','',cats[l.sire].img,alt(cats[l.sire]))}<div class="who"><span>父</span><b>${cats[l.sire].name}</b><span>${cats[l.sire].color}</span></div></a><a href="#cat-${l.dam}">${ph(cats[l.dam].v,'','',cats[l.dam].img,alt(cats[l.dam]))}<div class="who"><span>母</span><b>${cats[l.dam].name}</b><span>${cats[l.dam].color}</span></div></a>${sibs.map(s=>`<a href="#kitten-${s.slug}">${ph(s.v,'','',s.img,alt(s,'幼貓'))}<div class="who"><span>手足</span><b>${s.name}</b><span>${STATUS[s.status]} · ${s.color}</span></div></a>`).join('')}</div>
   </div></section>
   ${k.status==='available'?`<div class="mobile-cta"><div><div style="font-family:var(--head);font-weight:600">${k.name}</div><div style="font-size:12px;color:var(--fg-3)">${STATUS[k.status]}，${fmt(l.leave)} 可離家</div></div><a class="btn" href="#inquiry" data-kitten="${k.slug}">預約看貓</a></div>`:''}`;
 };
 
 views.cats = () => {
-  const g = role => Object.values(cats).filter(c=>c.role===role).map(c=>`<a class="ccard" href="#cat-${c.slug}">${ph(c.v)}<div class="name">${c.name}</div><div class="sub">英國短毛貓 · ${c.color} · ${c.birth.slice(0,4)} 年生</div></a>`).join('');
+  const g = role => Object.values(cats).filter(c=>c.role===role).map(c=>`<a class="ccard" href="#cat-${c.slug}">${ph(c.v,'','',c.img,alt(c))}<div class="name">${c.name}</div><div class="sub">英國短毛貓 · ${c.color} · ${c.birth.slice(0,4)} 年生</div></a>`).join('');
   return `
   <section class="page-head"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / 種公種母</div><h1>種公種母</h1><p>三隻種貓都通過 PKD 與 HCM 基因檢測，血統書與報告原件可在各自頁面查看。</p></div></section>
   <section><div class="wrap">
@@ -658,7 +674,7 @@ views.cat = slug => {
   const ls = c.litters.map(id=>litters[id]).sort((a,b)=>b.birth.localeCompare(a.birth));
   return `
   <section class="page-head" style="padding-bottom:24px"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / <a href="#cats">種公種母</a> / ${c.name}</div></div></section>
-  <section class="wrap cat-hero">${ph(c.v,'wide',`<div class="over"><span>${c.role==='king'?'KING':'QUEEN'}</span><h1>${c.name}</h1></div>`)}</section>
+  <section class="wrap cat-hero">${ph(c.v,'wide',`<div class="over"><span>${c.role==='king'?'KING':'QUEEN'}</span><h1>${c.name}</h1></div>`,c.img,alt(c))}</section>
   <section class="wrap cat-body">
     <div class="bio"><h2 style="font-size:26px">${c.reg}</h2><p>${c.bio}</p><p>${c.name} 目前 ${ageText(c.birth)}，${c.role==='king'?'已有四胎後代':'一年最多生一胎，每胎間隔至少一年'}。</p></div>
     <div class="datacard"><h3>資料</h3><table>
@@ -669,7 +685,7 @@ views.cat = slug => {
   <section class="section tight stone"><div class="wrap">${secTitle('文件','點擊查看掃描原件。')}
     <div class="docs">${c.docs.map((d,i)=>`<button class="doc" data-doc="${slug}:${i}"><b>${d[0]}</b><span>${d[1]}</span><span class="mono">${d[2]}</span><span class="open">查看原件</span></button>`).join('')}</div></div></section>
   <section class="section"><div class="wrap">${secTitle('歷代後代',`${c.name} 共有 ${ls.length} 胎、${kittens.filter(k=>c.litters.includes(k.litter)).length} 個孩子。`)}
-    <div class="offspring">${kittens.filter(k=>c.litters.includes(k.litter)).map(k=>`<a href="#kitten-${k.slug}">${ph(k.v,'sq')}<span><b>${k.name}</b>${fmt(litters[k.litter].birth).slice(0,7)}</span></a>`).join('')}</div></div></section>`;
+    <div class="offspring">${kittens.filter(k=>c.litters.includes(k.litter)).map(k=>`<a href="#kitten-${k.slug}">${ph(k.v,'sq','',k.img,alt(k,'幼貓'))}<span><b>${k.name}</b>${fmt(litters[k.litter].birth).slice(0,7)}</span></a>`).join('')}</div></div></section>`;
 };
 
 views.about = () => `
@@ -691,7 +707,7 @@ views.about = () => `
   <section class="section tight stone"><div class="wrap">${secTitle('飼主的話')}
     <div class="stories">${stories.map(s=>`<div class="story-card">${ph(s.v,'sq')}<q>${s.q}</q><div class="by">${s.by}</div></div>`).join('')}</div></div></section>
   <section class="section" id="gallery-section"><div class="wrap">${secTitle('送養相簿','已經到新家的孩子們，照片由飼主提供。')}
-    <div class="wall">${kittens.filter(k=>k.status==='adopted').map(k=>ph(k.v,'sq',`<span class="credit">${k.name}</span>`)).join('')}${ph('v1','sq')}</div></div></section>`;
+    <div class="wall">${kittens.filter(k=>k.status==='adopted').map(k=>ph(k.v,'sq',`<span class="credit">${k.name}</span>`,k.img,alt(k,'幼貓'))).join('')}</div></div></section>`;
 
 views.news = () => `
   <section class="page-head"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / 公告</div><h1>公告</h1></div></section>
@@ -771,7 +787,7 @@ function bind(){
     ['name','contact','kitten'].forEach(id=>{ const el=f.querySelector('#'+id); if(!el) return; const bad=!el.value.trim(); el.closest('.field').classList.toggle('invalid',bad); if(bad) ok=false; });
     if(!ok){ f.querySelector('.invalid input,.invalid select')?.focus(); return; }
     submitted = f.querySelector('[name=color]') ? 'waitlist' : 'inquiry'; prefillKitten=null; route(); });
-  document.querySelectorAll('.thumbs .ph').forEach(t=>t.addEventListener('click',()=>{ document.querySelectorAll('.thumbs .ph').forEach(x=>x.classList.remove('on')); t.classList.add('on'); }));
+  document.querySelectorAll('.thumbs .ph').forEach(t=>t.addEventListener('click',()=>{ document.querySelectorAll('.thumbs .ph').forEach(x=>x.classList.remove('on')); t.classList.add('on'); const src=t.querySelector('img'), main=document.querySelector('.gallery .main img'); if(src&&main){ main.src=src.src; main.alt=src.alt; } }));
   const cp = document.getElementById('copyLine');
   if (cp) cp.addEventListener('click',()=>{ navigator.clipboard?.writeText('@qiqicattery').then(()=>{cp.textContent='已複製';},()=>{cp.textContent='@qiqicattery';}); });
 }
