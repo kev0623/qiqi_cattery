@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-10T07:53:57.700Z",
+ "updated": "2026-11-10T08:07:06.330Z",
  "litters": {
   "L2026A": {
    "id": "L2026A",
@@ -64,7 +64,7 @@
    "sex": "男生",
    "color": "藍色",
    "img": "oslo.jpg",
-   "status": "reserved",
+   "status": "available",
    "v": "v5",
    "one": "圓臉圓眼，吃飽就睡，睡醒就找人。",
    "check": {
