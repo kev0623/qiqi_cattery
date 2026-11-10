@@ -512,7 +512,7 @@ footer .legal .wrap{display:flex;justify-content:space-between;gap:12px;padding-
     <div><h4>聯絡</h4><ul><li>Line 官方帳號 <span class="mono">@252djadk</span></li><li><a href="https://www.instagram.com/qiqi_2877/" target="_blank" rel="noopener">Instagram <span class="mono">@qiqi_2877</span></a></li><li><a href="https://www.facebook.com/p/%E9%8C%A1%E9%8C%A1%E8%B2%93%E8%88%8D-Meow-x-Qi-Qi-cattery-61591605988475/" target="_blank" rel="noopener">Facebook 錡錡貓舍 Meow x Qi Qi cattery</a></li><li><a href="https://maps.app.goo.gl/X4v9izsqrUQpVeN46" target="_blank" rel="noopener">302 新竹縣竹北市中華路 288 號，在 Google 地圖查看</a></li><li>特定寵物業許可證 特寵業字第 D1150168 號</li></ul></div>
   </div>
   <div class="wrap seo">貓舍，新竹貓舍，竹北貓舍，新竹縣貓舍，英國短毛貓舍，英短貓舍，金漸層貓舍，藍貓貓舍，幼貓認養，採預約制</div>
-  <div class="legal"><div class="wrap"><span>Designed by Kai-Chun&ensp;Copyright © 2026 錡錡貓舍 Qiqi Cattery&ensp;<a href="https://github.com/kev0623/qiqi_cattery/blob/main/prototype/img/CREDITS.md" target="_blank" rel="noopener" class="tiny">照片授權</a></span><span>累積人氣: <span class="mono" id="hits">1,208</span></span></div></div>
+  <div class="legal"><div class="wrap"><span>Designed by Kai-Chun&ensp;Copyright © 2026 錡錡貓舍 Qiqi Cattery&ensp;<a href="https://github.com/kev0623/qiqi_cattery/blob/main/img/CREDITS.md" target="_blank" rel="noopener" class="tiny">照片授權</a></span><span>累積人氣: <span class="mono" id="hits">1,208</span></span></div></div>
 </footer>
 
 <a class="line-fab" href="https://line.me/R/ti/p/@252djadk" target="_blank" rel="noopener">LINE</a>
@@ -533,38 +533,27 @@ const cats = {
   atlas:{slug:'atlas',name:'Atlas',reg:'Qiqi Atlas of Zhubei',role:'king',breed:'英國短毛貓',color:'藍色',sex:'男生',birth:'2023-04-18',blood:'A 型',v:'v2',img:'atlas.jpg',
     bio:'Atlas 是貓舍的第一隻種公，骨架圓厚、耳位低，個性穩重到近乎懶散。他會在產房外守著每一胎幼貓，是孩子們最早學會信任的大人。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-02-03 · 台大獸醫院'],['FIV / FeLV','陰性','2026-01-12 · 安心動物醫院'],['血型','A 型','2023-09-20']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0418'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-01-12'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-02-03']],
-    litters:['L2026A','L2026B','L2025A','L2025B']},
+    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0418'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-01-12'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-02-03']]},
   luna:{slug:'luna',name:'Luna',reg:'Qiqi Luna of Zhubei',role:'queen',breed:'英國短毛貓',color:'金漸層',sex:'女生',birth:'2023-10-02',blood:'A 型',v:'v3',img:'luna.jpg',
     bio:'Luna 是溫暖的金漸層，毛尖帶一點深色，眼睛是少見的湖綠。她是很有主見的母親，會自己決定讓誰靠近產房。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-06-11 · 台大獸醫院'],['FIV / FeLV','陰性','2026-02-20 · 安心動物醫院'],['血型','A 型','2024-03-15']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-1002'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-02-20'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-06-11']],
-    litters:['L2026A','L2025B']},
+    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-1002'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-02-20'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-06-11']]},
   coco:{slug:'coco',name:'Coco',reg:'Qiqi Coco of Zhubei',role:'queen',breed:'英國短毛貓',color:'藍乳白三色',sex:'女生',birth:'2023-06-27',blood:'A 型',v:'v4',img:'coco.jpg',
     bio:'Coco 臉上的白色倒 V 對稱得像畫上去的。個性黏人，喜歡跟著人走來走去，她的孩子通常也最快學會撒嬌。',
     tests:[['PKD（多囊腎）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['HCM 基因（MYBPC3）','N/N 未帶因','2024-03-08 · 台大獸醫院'],['FIV / FeLV','陰性','2026-03-02 · 安心動物醫院'],['血型','A 型','2024-01-10']],
-    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0627'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-03-02'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-03-08']],
-    litters:['L2026B','L2025A']},
+    docs:[['血統書','WCF 登錄','登錄號 WCF-TW-2023-0627'],['疫苗紀錄','三合一 × 年度追加','最近一劑 2026-03-02'],['基因檢測報告','PKD、HCM、血型','檢測日 2024-03-08']]},
 };
-const litters = {
-  L2026A:{id:'L2026A',dam:'luna',sire:'atlas',birth:'2026-09-14',season:'2026 秋',leave:'2026-12-07',published:true},
-  L2026B:{id:'L2026B',dam:'coco',sire:'atlas',birth:'2026-05-03',season:'2026 春',leave:'2026-07-26',published:true},
-  L2025A:{id:'L2025A',dam:'coco',sire:'atlas',birth:'2025-11-02',season:'2025 冬',leave:'2026-01-25',published:true},
-  L2025B:{id:'L2025B',dam:'luna',sire:'atlas',birth:'2025-04-20',season:'2025 春',leave:'2025-07-13',published:true},
-};
-const kittens = [
-  {slug:'hazel',name:'Hazel',litter:'L2026A',sex:'女生',color:'銀漸層',img:'hazel.jpg',status:'available',v:'v3',one:'一胎裡最先睜眼、也最先爬出產箱的孩子。',check:{vaccine:1,deworm:1,chip:0,genetic:1},video:true},
-  {slug:'oslo',name:'Oslo',litter:'L2026A',sex:'男生',color:'藍色',img:'oslo.jpg',status:'reserved',v:'v5',one:'圓臉圓眼，吃飽就睡，睡醒就找人。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
-  {slug:'pepper',name:'Pepper',litter:'L2026A',sex:'女生',color:'藍白',img:'pepper.jpg',status:'available',v:'v4',one:'額頭上有一小撮白，個性最安靜。',check:{vaccine:1,deworm:1,chip:0,genetic:1}},
-  {slug:'milo',name:'Milo',litter:'L2026B',sex:'男生',color:'藍乳白',img:'milo.jpg',status:'adopted',v:'v4',one:'已經在台中的新家當老大。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'nori',name:'Nori',litter:'L2026B',sex:'女生',color:'銀虎斑',img:'nori.jpg',status:'adopted',v:'v2',one:'新家有一隻柴犬，兩週就成了朋友。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'juno',name:'Juno',litter:'L2026B',sex:'男生',color:'淡紫',img:'juno.jpg',status:'adopted',v:'v1',one:'最愛窗邊曬太陽。',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'bean',name:'Bean',litter:'L2025A',sex:'女生',color:'白色',img:'bean.jpg',status:'adopted',v:'v4',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'mochi',name:'Mochi',litter:'L2025A',sex:'男生',color:'白色',img:'mochi.jpg',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'sage',name:'Sage',litter:'L2025B',sex:'女生',color:'銀虎斑白',img:'sage.jpg',status:'adopted',v:'v3',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'teddy',name:'Teddy',litter:'L2025B',sex:'男生',color:'乳色',img:'teddy.jpg',status:'adopted',v:'v5',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-  {slug:'ollie',name:'Ollie',litter:'L2025B',sex:'男生',color:'白色',img:'ollie.jpg',status:'adopted',v:'v2',one:'',check:{vaccine:1,deworm:1,chip:1,genetic:1}},
-];
+/* 幼貓與胎的資料由 data/site.json 載入（後台 admin.html 會改寫這個檔）。未上架的胎不顯示。 */
+let litters = {}, kittens = [];
+async function loadData(){
+  try {
+    const r = await fetch('data/site.json?t=' + Date.now(), {cache:'no-store'}); if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    litters = Object.fromEntries(Object.entries(d.litters||{}).filter(([,l])=>l.published));
+    kittens = (d.kittens||[]).filter(k=>litters[k.litter]);
+  } catch(e) { console.warn('載入 data/site.json 失敗', e); }
+}
+const catLitters = slug => Object.keys(litters).filter(id=>litters[id].dam===slug||litters[id].sire===slug);
 const news = [
   {date:'2026-11-02',tag:'新胎公告',title:'Luna 與 Atlas 的孩子開放預約',body:'9 月 14 日出生的三隻幼貓已滿 7 週，照片與影片已更新至幼貓找家。預計 12 月 7 日起陸續離家。'},
   {date:'2026-10-20',tag:'參觀安排',title:'11 月參觀時段調整',body:'11 月僅開放週六下午與週日上午參觀，每時段一組家庭。請先透過 Line 預約。'},
@@ -674,7 +663,7 @@ views.cats = () => {
 
 views.cat = slug => {
   const c = cats[slug]; if(!c) return views.notfound();
-  const ls = c.litters.map(id=>litters[id]).sort((a,b)=>b.birth.localeCompare(a.birth));
+  const lids = catLitters(slug); const ls = lids.map(id=>litters[id]).sort((a,b)=>b.birth.localeCompare(a.birth));
   return `
   <section class="page-head" style="padding-bottom:24px"><div class="wrap"><div class="crumb"><a href="#home">首頁</a> / <a href="#cats">種公種母</a> / ${c.name}</div></div></section>
   <section class="wrap cat-hero">${ph(c.v,'wide',`<div class="over"><span>${c.role==='king'?'KING':'QUEEN'}</span><h1>${c.name}</h1></div>`,c.img,alt(c))}</section>
@@ -687,8 +676,8 @@ views.cat = slug => {
   </section>
   <section class="section tight stone"><div class="wrap">${secTitle('文件','點擊查看掃描原件。')}
     <div class="docs">${c.docs.map((d,i)=>`<button class="doc" data-doc="${slug}:${i}"><b>${d[0]}</b><span>${d[1]}</span><span class="mono">${d[2]}</span><span class="open">查看原件</span></button>`).join('')}</div></div></section>
-  <section class="section"><div class="wrap">${secTitle('歷代後代',`${c.name} 共有 ${ls.length} 胎、${kittens.filter(k=>c.litters.includes(k.litter)).length} 個孩子。`)}
-    <div class="offspring">${kittens.filter(k=>c.litters.includes(k.litter)).map(k=>`<a href="#kitten-${k.slug}">${ph(k.v,'sq','',k.img,alt(k,'幼貓'))}<span><b>${k.name}</b>${fmt(litters[k.litter].birth).slice(0,7)}</span></a>`).join('')}</div></div></section>`;
+  <section class="section"><div class="wrap">${secTitle('歷代後代',`${c.name} 共有 ${ls.length} 胎、${kittens.filter(k=>lids.includes(k.litter)).length} 個孩子。`)}
+    <div class="offspring">${kittens.filter(k=>lids.includes(k.litter)).map(k=>`<a href="#kitten-${k.slug}">${ph(k.v,'sq','',k.img,alt(k,'幼貓'))}<span><b>${k.name}</b>${fmt(litters[k.litter].birth).slice(0,7)}</span></a>`).join('')}</div></div></section>`;
 };
 
 views.about = () => `
@@ -808,5 +797,5 @@ document.getElementById('lightbox').addEventListener('click',e=>{ if(e.target.id
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled', window.scrollY>40),{passive:true});
 // Links that open a view without changing hash (same-hash click): force re-route
 document.addEventListener('click',e=>{ const a=e.target.closest('a[href^="#"]'); if(a && a.getAttribute('href')===location.hash){ e.preventDefault(); route(); } });
-route();
+loadData().then(route);
 </script>

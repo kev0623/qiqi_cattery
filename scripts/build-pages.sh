@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # 把 Artifact 格式的頁面（無 doctype / head）包成可獨立開啟的完整 HTML，供 GitHub Pages 使用。
 # 用法：bash scripts/build-pages.sh
+# 注意：img/ 與 data/site.json 放在根目錄，是後台 admin.html 直接寫入的位置，這個腳本不會動它們。
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -16,6 +17,6 @@ wrap() { # $1 來源  $2 輸出
 }
 
 wrap prototype/index.html index.html
+wrap prototype/admin.html admin.html
 wrap docs/design-spec.html design.html
 touch .nojekyll
-rm -rf img && cp -R prototype/img img && echo "copied img/"

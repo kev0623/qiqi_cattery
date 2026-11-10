@@ -1,0 +1,388 @@
+<title>錡錡貓舍 後台</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Noto+Serif+TC:wght@600&family=Noto+Sans+TC:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* 後台：沿用前台 token，但密度較高（字級 14px、列高 44px）。手機單欄，狀態按鈕換到第二行。 */
+:root{
+  --bg:#F3F1EC; --bg-2:#EAE7E0; --card:#FBFAF7;
+  --fg:#1B1A17; --fg-2:#5B574F; --fg-3:#8E8980; --line:#D9D4CA;
+  --accent:#8F7146; --accent-soft:#EFE6D6;
+  --sage:#6F7F6B; --sage-soft:#E4EAE1; --amber:#A8783A; --amber-soft:#F1E6D1; --mute:#8E8980; --mute-soft:#E8E6E1;
+  --danger:#9B4A3C; --danger-soft:#F3E3DF;
+  --shadow:0 1px 2px rgba(27,26,23,.06),0 18px 40px -20px rgba(27,26,23,.22);
+  --display:"Cormorant Garamond","Noto Serif TC",Georgia,serif;
+  --head:"Noto Serif TC","Songti TC","PMingLiU",Georgia,serif;
+  --body:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#161513; --bg-2:#1F1E1A; --card:#201F1B; --fg:#EDE9E1; --fg-2:#B9B3A7; --fg-3:#847E73; --line:#35332D;
+    --accent:#C3A572; --accent-soft:#2B2620;
+    --sage:#9DB097; --sage-soft:#242A22; --amber:#D1A05F; --amber-soft:#2D2619; --mute:#847E73; --mute-soft:#2A2925;
+    --danger:#D28A7C; --danger-soft:#302220;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -20px rgba(0,0,0,.7); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#161513; --bg-2:#1F1E1A; --card:#201F1B; --fg:#EDE9E1; --fg-2:#B9B3A7; --fg-3:#847E73; --line:#35332D;
+  --accent:#C3A572; --accent-soft:#2B2620;
+  --sage:#9DB097; --sage-soft:#242A22; --amber:#D1A05F; --amber-soft:#2D2619; --mute:#847E73; --mute-soft:#2A2925;
+  --danger:#D28A7C; --danger-soft:#302220;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 18px 40px -20px rgba(0,0,0,.7); color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:14px;line-height:1.6;padding-bottom:120px}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--head);font-weight:600;line-height:1.3;margin:0}
+p{margin:0}
+img{max-width:100%;display:block}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+/* 頂欄 */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.brand{font-family:var(--display);font-size:20px;letter-spacing:.14em;font-weight:500;display:flex;align-items:baseline;gap:10px;white-space:nowrap}
+.brand small{font-family:var(--body);font-size:10px;letter-spacing:.3em;color:var(--accent);font-weight:500}
+.tabs{display:flex;gap:4px}
+.tabs button{height:36px;padding:0 14px;border-radius:999px;color:var(--fg-2)}
+.tabs button.on{background:var(--fg);color:var(--bg)}
+
+/* 共用 */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 18px;font-size:13px;letter-spacing:.08em;border:1px solid var(--fg);background:var(--fg);color:var(--bg);border-radius:4px;white-space:nowrap;transition:opacity .2s}
+.btn:hover{opacity:.85}
+.btn.ghost{background:transparent;color:var(--fg)}
+.btn.gold{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.danger{background:transparent;border-color:var(--danger);color:var(--danger)}
+.btn.danger.arm{background:var(--danger);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.full{width:100%}
+.note{font-size:13px;color:var(--fg-3)}
+.band{margin:16px 0 0;padding:12px 16px;border-radius:10px;background:var(--accent-soft);color:var(--fg-2);font-size:13px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.band a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.empty{padding:48px 16px;text-align:center;color:var(--fg-3);border:1px dashed var(--line);border-radius:10px}
+
+/* 幼貓管理 */
+.head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin:28px 0 8px}
+.head h1{font-size:24px}
+.head .meta{color:var(--fg-3);font-size:12.5px;margin-top:4px}
+.litter{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-top:16px;overflow:hidden}
+.litter.off{border-style:dashed}
+.lhead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.lhead h2{font-size:17px;display:flex;align-items:center;gap:8px}
+.lhead h2 .draft{font-family:var(--body);font-size:11px;letter-spacing:.1em;color:var(--amber);background:var(--amber-soft);padding:2px 8px;border-radius:999px;font-weight:500}
+.lhead .meta{font-size:12.5px;color:var(--fg-3);margin-top:2px}
+.lacts{display:flex;align-items:center;gap:14px}
+.lacts .edit{color:var(--fg-2);font-size:13px;height:32px;padding:0 10px;border-radius:4px;border:1px solid var(--line)}
+.row{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:14px;min-height:60px;padding:8px 16px;border-bottom:1px solid var(--line)}
+.row:last-of-type{border-bottom:0}
+.row .thumb{width:44px;height:55px;border-radius:4px;overflow:hidden;background:var(--bg-2);display:flex;align-items:center;justify-content:center;color:var(--fg-3)}
+.row .thumb img{width:100%;height:100%;object-fit:cover}
+.row .thumb.muted img{filter:saturate(.2) opacity(.7)}
+.row .info{min-width:0;text-align:left}
+.row .info b{display:block;font-family:var(--head);font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .info span{display:block;font-size:12.5px;color:var(--fg-3)}
+.row .info:hover b{color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--bg)}
+.seg button{height:30px;padding:0 12px;border-radius:999px;font-size:12.5px;color:var(--fg-3);white-space:nowrap;transition:all .2s var(--ease)}
+.seg button.on.available{background:var(--sage-soft);color:var(--sage);font-weight:500}
+.seg button.on.reserved{background:var(--amber-soft);color:var(--amber);font-weight:500}
+.seg button.on.adopted{background:var(--mute-soft);color:var(--fg-2);font-weight:500}
+.addk{display:block;width:100%;height:44px;text-align:left;padding:0 16px;color:var(--accent);font-size:13.5px;border-top:1px solid var(--line);background:color-mix(in srgb,var(--accent-soft) 40%,transparent)}
+.addk:hover{background:var(--accent-soft)}
+@media (max-width:640px){
+  .row{grid-template-columns:44px 1fr}
+  .row .seg{grid-column:1/-1;justify-self:start;margin-bottom:4px}
+  .head{flex-direction:column;align-items:flex-start}
+  .tabs button{padding:0 11px}
+}
+
+/* 開關 */
+.switch{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--fg-2);cursor:pointer;user-select:none}
+.switch input{position:absolute;opacity:0;width:0;height:0}
+.switch i{width:36px;height:22px;border-radius:999px;background:var(--line);position:relative;transition:background .2s;flex:none}
+.switch i::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--card);transition:transform .2s var(--ease);box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.switch input:checked + i{background:var(--sage)}
+.switch input:checked + i::after{transform:translateX(14px)}
+.switch input:focus-visible + i{outline:2px solid var(--accent);outline-offset:2px}
+
+/* 表單面板 */
+.sheet{position:fixed;inset:0;z-index:40;background:rgba(27,26,23,.45);display:flex;align-items:flex-end;justify-content:center}
+.panel{background:var(--card);width:100%;max-width:560px;max-height:92vh;overflow:auto;border-radius:16px 16px 0 0;padding:0 20px max(24px,env(safe-area-inset-bottom,0px));box-shadow:var(--shadow)}
+@media (min-width:640px){ .sheet{align-items:center;padding:24px} .panel{border-radius:12px;max-height:88vh} }
+.phead{position:sticky;top:0;background:var(--card);display:flex;align-items:center;justify-content:space-between;padding:18px 0 12px;border-bottom:1px solid var(--line);margin-bottom:18px;z-index:1}
+.phead h2{font-size:18px}
+.phead button{color:var(--fg-3);font-size:13px}
+.field{display:grid;gap:6px;margin-bottom:18px}
+.field label{font-size:13px;color:var(--fg-2);letter-spacing:.04em}
+.field label em{font-style:normal;color:var(--accent);margin-left:4px}
+.field input,.field select,.field textarea{height:44px;border:1px solid var(--line);background:var(--bg);padding:0 12px;font:inherit;font-size:15px;color:var(--fg);border-radius:4px;width:100%}
+.field textarea{height:auto;min-height:84px;padding:10px 12px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--accent)}
+.field.invalid input{border-color:var(--danger)}
+.field .hint{font-size:12px;color:var(--fg-3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.choices{display:flex;gap:8px;flex-wrap:wrap}
+.choices button{height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--fg-2)}
+.choices button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px}
+.photo{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
+.photo .pv{width:96px;aspect-ratio:4/5;border-radius:6px;background:var(--bg-2);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--fg-3);font-size:12px}
+.photo .pv img{width:100%;height:100%;object-fit:cover}
+.photo input[type=file]{font-size:13px;width:100%}
+.pacts{display:grid;gap:10px;margin-top:8px;padding-top:18px;border-top:1px solid var(--line)}
+
+/* 底部發佈列 */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--fg);color:var(--bg);padding:12px max(16px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.bar .txt{font-size:13.5px}
+.bar .txt small{display:block;font-size:12px;opacity:.7}
+.bar .acts{display:flex;gap:8px}
+.bar .btn{height:38px;background:var(--bg);color:var(--fg);border-color:var(--bg)}
+.bar .btn.ghost{background:transparent;color:var(--bg);border-color:rgba(255,255,255,.35)}
+.bar .btn.gold{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* 設定 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-top:16px}
+.card h2{font-size:17px;margin-bottom:6px}
+.card p{color:var(--fg-2);font-size:13.5px}
+.card ol{margin:10px 0 0;padding-left:20px;color:var(--fg-2);font-size:13.5px}
+.card ol li{margin-bottom:4px}
+.card .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13.5px;margin-top:10px}
+.kv span{color:var(--fg-3)}
+
+/* 提示 */
+.toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:50;background:var(--card);color:var(--fg);border:1px solid var(--line);box-shadow:var(--shadow);padding:12px 18px;border-radius:10px;font-size:13.5px;max-width:min(92vw,520px);text-align:center}
+.toast a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.toast.err{border-color:var(--danger);color:var(--danger)}
+</style>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#"><span>QIQI</span><small>ADMIN</small></a>
+  <nav class="tabs" id="tabs"><button data-tab="kittens" class="on">幼貓管理</button><button data-tab="settings">設定</button></nav>
+</div></header>
+<main class="wrap" id="app"><div class="empty" style="margin-top:24px">載入中…</div></main>
+<div class="bar" id="bar" hidden><div class="wrap"><div class="txt" id="barTxt"></div><div class="acts"><button class="btn ghost" id="discard">捨棄</button><button class="btn gold" id="publish">發佈到網站</button></div></div></div>
+<div class="sheet" id="sheet" hidden><div class="panel" role="dialog" aria-modal="true"><div class="phead"><h2 id="sheetTitle"></h2><button id="sheetClose">關閉</button></div><div id="sheetBody"></div></div></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+/* 資料流：GitHub 上的 data/site.json 是唯一正本。後台載入 → 複製成草稿 → 所有修改先進草稿（存在瀏覽器）→ 按發佈才用 GitHub API 寫回。 */
+const REPO = 'kev0623/qiqi_cattery', BRANCH = 'main', DATA_PATH = 'data/site.json', IMG_DIR = 'img/kittens';
+const SITE_URL = 'https://kev0623.github.io/qiqi_cattery/';
+const PARENTS = { atlas:{name:'Atlas',role:'king'}, luna:{name:'Luna',role:'queen'}, coco:{name:'Coco',role:'queen'} };
+const STATUS = { available:'可預約', reserved:'已預訂', adopted:'已送養' };
+const CHECKS = [['vaccine','疫苗'],['deworm','驅蟲'],['chip','晶片'],['genetic','基因檢測']];
+const COLORS = ['藍色','藍白','藍乳白','藍乳白三色','金漸層','銀漸層','藍金漸層','銀虎斑','銀虎斑白','乳色','淡紫','白色'];
+
+const ls = { get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k,v){ try { localStorage.setItem(k,v); } catch(e){} }, del(k){ try { localStorage.removeItem(k); } catch(e){} } };
+const clone = o => JSON.parse(JSON.stringify(o));
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = d => (d||'').replace(/-/g,'.');
+const utf8ToB64 = s => { const b = new TextEncoder().encode(s); let bin=''; for (let i=0;i<b.length;i+=0x8000) bin += String.fromCharCode(...b.subarray(i,i+0x8000)); return btoa(bin); };
+const b64ToUtf8 = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g,'')), c=>c.charCodeAt(0)));
+const addDays = (d,n) => { const x = new Date(d+'T00:00:00'); x.setDate(x.getDate()+n); const p = v => String(v).padStart(2,'0'); return `${x.getFullYear()}-${p(x.getMonth()+1)}-${p(x.getDate())}`; };
+const seasonOf = d => { const m = +d.slice(5,7); return d.slice(0,4)+' '+(m>=3&&m<=5?'春':m>=6&&m<=8?'夏':m>=9&&m<=11?'秋':'冬'); };
+
+let token = ls.get('qiqi-admin-token') || '';
+let base = null, sha = null;   // 線上版本與它的 GitHub sha
+let draft = null, log = [], images = {};  // 草稿、變更摘要、待上傳照片 {path: dataURL}
+let tab = 'kittens', busy = false;
+
+/* ---------- GitHub ---------- */
+async function gh(path, opts={}) {
+  const r = await fetch(`https://api.github.com/repos/${REPO}/${path}`, { ...opts, headers: { Accept:'application/vnd.github+json', Authorization:`Bearer ${token}`, 'X-GitHub-Api-Version':'2022-11-28', ...(opts.headers||{}) } });
+  if (!r.ok) { const e = new Error(r.status===401 ? '金鑰無效或已過期，請到「設定」重新貼上。' : r.status===403 ? '這把金鑰沒有寫入權限。' : r.status===404 ? '找不到檔案或沒有權限。' : `GitHub 回應 ${r.status}`); e.status = r.status; throw e; }
+  return r.json();
+}
+async function fetchRemote() {
+  if (token) {
+    try { const j = await gh(`contents/${DATA_PATH}?ref=${BRANCH}&t=${Date.now()}`); sha = j.sha; return JSON.parse(b64ToUtf8(j.content)); }
+    catch(e) { toast(e.message, true); if (e.status===401) { token=''; ls.del('qiqi-admin-token'); } }
+  }
+  const r = await fetch(`data/site.json?t=${Date.now()}`, {cache:'no-store'}); if (!r.ok) throw new Error('讀不到網站資料');
+  sha = null; return r.json();
+}
+async function putFile(path, b64, message, fileSha) {
+  const body = { message, content: b64, branch: BRANCH }; if (fileSha) body.sha = fileSha;
+  return gh(`contents/${path}`, { method:'PUT', body: JSON.stringify(body) });
+}
+
+/* ---------- 草稿 ---------- */
+function saveDraft(){ ls.set('qiqi-admin-draft', JSON.stringify({ draft, log, images })); }
+function change(msg){ log.push(msg); saveDraft(); render(); }
+function discard(){ draft = clone(base); log = []; images = {}; ls.del('qiqi-admin-draft'); render(); toast('已捨棄未發佈的變更'); }
+const litterList = () => Object.values(draft.litters).sort((a,b)=>b.birth.localeCompare(a.birth));
+const kittensOf = id => draft.kittens.filter(k=>k.litter===id);
+const parentName = s => PARENTS[s]?.name || s;
+const imgSrc = k => k.img ? (images['img/'+k.img] || `img/${k.img}`) : null;
+function slugify(name, except){ let s = name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); if (!s) s = 'k'+Date.now().toString(36); let out = s, n = 2; while (draft.kittens.some(k=>k.slug===out && k.slug!==except)) out = `${s}-${n++}`; return out; }
+function nextLitterId(birth){ const y = birth.slice(0,4); for (const c of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') { if (!draft.litters['L'+y+c]) return 'L'+y+c; } return 'L'+y+Date.now().toString(36); }
+
+/* ---------- 畫面 ---------- */
+const app = document.getElementById('app');
+function render(){
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('on', b.dataset.tab===tab));
+  app.innerHTML = tab==='settings' ? viewSettings() : viewKittens();
+  const bar = document.getElementById('bar'); bar.hidden = !log.length;
+  if (log.length) document.getElementById('barTxt').innerHTML = `有 ${log.length} 項未發佈的變更<small>${esc(log[log.length-1])}</small>`;
+  bind();
+}
+function viewKittens(){
+  const live = draft.kittens.filter(k=>k.status==='available' && draft.litters[k.litter]?.published).length;
+  const ls_ = litterList();
+  return `
+  <div class="head"><div><h1>幼貓管理</h1><div class="meta">${live} 隻可預約 · 網站上次更新 ${base.updated ? esc(base.updated.slice(0,10).replace(/-/g,'.')) : '—'}</div></div><button class="btn" data-add-litter>＋ 新增一胎</button></div>
+  ${token ? '' : `<div class="band"><span>目前是檢視模式：可以先修改草稿，要發佈到網站前請先在「設定」貼上金鑰。</span><a href="#" data-tab-link="settings">前往設定</a></div>`}
+  ${ls_.length ? ls_.map(l => `
+  <section class="litter ${l.published?'':'off'}">
+    <div class="lhead"><div><h2>${esc(parentName(l.dam))} × ${esc(parentName(l.sire))}${l.published?'':'<span class="draft">未上架</span>'}</h2><div class="meta mono">${fmt(l.birth)} 出生 · 預計 ${fmt(l.leave)} 離家 · ${kittensOf(l.id).length} 隻</div></div>
+      <div class="lacts"><label class="switch"><input type="checkbox" data-pub="${l.id}" ${l.published?'checked':''}><i></i>上架</label><button class="edit" data-edit-litter="${l.id}">編輯這一胎</button></div></div>
+    ${kittensOf(l.id).map(k => `
+    <div class="row">
+      <div class="thumb ${k.status==='adopted'?'muted':''}">${imgSrc(k) ? `<img src="${imgSrc(k)}" alt="">` : '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 11c0-3 1-6 1-6l4 3h4l4-3s1 3 1 6c0 5-3 8-7 8s-7-3-7-8Z"/></svg>'}</div>
+      <button class="info" data-edit-kitten="${esc(k.slug)}"><b>${esc(k.name)}</b><span>${esc(k.sex)} · ${esc(k.color)}</span></button>
+      <div class="seg">${Object.keys(STATUS).map(s=>`<button class="${k.status===s?'on '+s:''}" data-status="${esc(k.slug)}:${s}">${STATUS[s]}</button>`).join('')}</div>
+    </div>`).join('')}
+    <button class="addk" data-add-kitten="${l.id}">＋ 新增幼貓到這一胎</button>
+  </section>`).join('') : `<div class="empty" style="margin-top:16px">還沒有任何一胎。按右上角「新增一胎」開始。</div>`}`;
+}
+function viewSettings(){
+  return `
+  <div class="head"><div><h1>設定</h1><div class="meta">金鑰只存在這台裝置的瀏覽器裡。</div></div></div>
+  <div class="card"><h2>發佈金鑰</h2><p>由網站管理者提供。貼上後按儲存，之後在這台裝置就不用再輸入。</p>
+    <div class="field" style="margin-top:14px"><label for="tokenInput">金鑰</label><input id="tokenInput" type="password" autocomplete="off" placeholder="github_pat_…" value="${esc(token)}"></div>
+    <div class="acts"><button class="btn" id="saveToken">儲存金鑰</button>${token?'<button class="btn ghost" id="clearToken">清除金鑰</button>':''}</div></div>
+  <div class="card"><h2>網站</h2>
+    <div class="kv"><span>前台網址</span><a href="${SITE_URL}" target="_blank" rel="noopener" style="color:var(--accent)">${SITE_URL}</a><span>上次發佈</span><b class="mono">${base.updated ? esc(base.updated.replace('T',' ').slice(0,16)) : '—'}</b><span>資料筆數</span><b>${Object.keys(draft.litters).length} 胎、${draft.kittens.length} 隻</b></div>
+    <div class="acts"><button class="btn ghost" id="reload">重新讀取網站資料</button></div><p class="note" style="margin-top:8px">重新讀取會捨棄這台裝置上未發佈的草稿。</p></div>
+  <div class="card"><h2>怎麼用</h2><ol><li>「新增一胎」先選爸媽與出生日，再逐隻新增幼貓。新的一胎預設未上架，填好再打開「上架」。</li><li>幼貓找到家了，直接點那一列右邊的「已預訂」或「已送養」。</li><li>所有修改都先存成草稿，按下方「發佈到網站」才會真的更新，約一分鐘後生效。</li><li>照片請用直式或接近 4:5 的構圖，上傳時會自動縮小壓縮。</li></ol></div>`;
+}
+
+/* ---------- 表單面板 ---------- */
+const sheet = document.getElementById('sheet');
+function openSheet(title, html, mount){ document.getElementById('sheetTitle').textContent = title; document.getElementById('sheetBody').innerHTML = html; sheet.hidden = false; document.body.style.overflow='hidden'; mount && mount(document.getElementById('sheetBody')); }
+function closeSheet(){ sheet.hidden = true; document.body.style.overflow=''; }
+document.getElementById('sheetClose').addEventListener('click', closeSheet);
+sheet.addEventListener('click', e => { if (e.target===sheet) closeSheet(); });
+
+function litterForm(id){
+  const l = id ? draft.litters[id] : { dam:'luna', sire:'atlas', birth:'', leave:'', published:false };
+  const opts = role => Object.entries(PARENTS).filter(([,p])=>p.role===role).map(([s,p])=>`<option value="${s}" ${l[role==='queen'?'dam':'sire']===s?'selected':''}>${p.name}</option>`).join('');
+  openSheet(id ? '編輯這一胎' : '新增一胎', `
+    <div class="two"><div class="field"><label>母貓</label><select id="fDam">${opts('queen')}</select></div><div class="field"><label>父貓</label><select id="fSire">${opts('king')}</select></div></div>
+    <div class="two"><div class="field" id="fBirthField"><label>出生日期<em>必填</em></label><input id="fBirth" type="date" value="${l.birth}"></div><div class="field"><label>預計離家日</label><input id="fLeave" type="date" value="${l.leave}"><span class="hint">預設出生後 12 週，可自行調整。</span></div></div>
+    <div class="field"><label class="switch"><input id="fPub" type="checkbox" ${l.published?'checked':''}><i></i>在網站上顯示這一胎</label><span class="hint">關閉時整胎在前台看不到，適合先建好資料再一次公開。</span></div>
+    <div class="pacts"><button class="btn full" id="fSave">${id?'儲存':'建立這一胎'}</button>${id ? `<button class="btn danger full" id="fDel" ${kittensOf(id).length?'disabled title="這一胎還有幼貓，先刪除幼貓才能刪除整胎"':''}>${kittensOf(id).length?'這一胎還有幼貓，無法刪除':'刪除這一胎'}</button>`:''}</div>`,
+  el => {
+    const birth = el.querySelector('#fBirth'), leave = el.querySelector('#fLeave');
+    birth.addEventListener('input', () => el.querySelector('#fBirthField').classList.remove('invalid'));
+    birth.addEventListener('change', () => { if (birth.value && (!leave.value || !id)) leave.value = addDays(birth.value, 84); });
+    el.querySelector('#fSave').addEventListener('click', () => {
+      if (!birth.value) { el.querySelector('#fBirthField').classList.add('invalid'); birth.focus(); return; }
+      const v = { dam: el.querySelector('#fDam').value, sire: el.querySelector('#fSire').value, birth: birth.value, leave: leave.value || addDays(birth.value,84), season: seasonOf(birth.value), published: el.querySelector('#fPub').checked };
+      if (id) { Object.assign(draft.litters[id], v); closeSheet(); change(`修改 ${parentName(v.dam)} × ${parentName(v.sire)} 這一胎`); }
+      else { const nid = nextLitterId(v.birth); draft.litters[nid] = { id: nid, ...v }; closeSheet(); change(`新增一胎 ${parentName(v.dam)} × ${parentName(v.sire)}`); }
+    });
+    armDelete(el.querySelector('#fDel'), () => { delete draft.litters[id]; closeSheet(); change('刪除一胎'); });
+  });
+}
+
+function kittenForm(litterId, slug){
+  const k = slug ? draft.kittens.find(x=>x.slug===slug) : { name:'', sex:'女生', color:'', status:'available', one:'', check:{vaccine:0,deworm:0,chip:0,genetic:0}, img:null };
+  let photo = null; // 新選的照片 dataURL
+  openSheet(slug ? `編輯 ${k.name}` : '新增幼貓', `
+    <div class="field"><label>照片</label><div class="photo"><div class="pv" id="fPv">${imgSrc(k) ? `<img src="${imgSrc(k)}" alt="">` : '尚無照片'}</div><div><input id="fPhoto" type="file" accept="image/*"><span class="hint">會自動縮到 1000px 並壓縮。</span></div></div></div>
+    <div class="field" id="fNameField"><label>名字<em>必填</em></label><input id="fName" value="${esc(k.name)}" placeholder="例：Hazel"></div>
+    <div class="two"><div class="field"><label>性別</label><div class="choices" id="fSex">${['女生','男生'].map(s=>`<button type="button" class="${k.sex===s?'on':''}" data-v="${s}">${s}</button>`).join('')}</div></div>
+    <div class="field"><label>花色</label><input id="fColor" list="colorList" value="${esc(k.color)}" placeholder="例：藍色"><datalist id="colorList">${COLORS.map(c=>`<option value="${c}">`).join('')}</datalist></div></div>
+    <div class="field"><label>狀態</label><div class="choices" id="fStatus">${Object.keys(STATUS).map(s=>`<button type="button" class="${k.status===s?'on':''}" data-v="${s}">${STATUS[s]}</button>`).join('')}</div></div>
+    <div class="field"><label>一句話介紹</label><textarea id="fOne" placeholder="例：一胎裡最先睜眼、也最先爬出產箱的孩子。">${esc(k.one)}</textarea></div>
+    <div class="field"><label>已完成的項目</label><div class="checks">${CHECKS.map(([key,label])=>`<label class="switch"><input type="checkbox" data-check="${key}" ${k.check?.[key]?'checked':''}><i></i>${label}</label>`).join('')}</div></div>
+    <div class="pacts"><button class="btn full" id="fSave">${slug?'儲存':'新增'}</button>${slug?'<button class="btn danger full" id="fDel">刪除這隻幼貓</button>':''}</div>`,
+  el => {
+    el.querySelectorAll('.field input').forEach(i => i.addEventListener('input', () => i.closest('.field').classList.remove('invalid')));
+    el.querySelectorAll('.choices').forEach(g => g.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; g.querySelectorAll('button').forEach(x=>x.classList.toggle('on', x===b)); }));
+    el.querySelector('#fPhoto').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; shrink(f).then(url => { photo = url; el.querySelector('#fPv').innerHTML = `<img src="${url}" alt="">`; }).catch(() => toast('這張照片無法讀取，請換一張 JPG 或 PNG。', true)); });
+    el.querySelector('#fSave').addEventListener('click', () => {
+      const name = el.querySelector('#fName').value.trim();
+      if (!name) { el.querySelector('#fNameField').classList.add('invalid'); el.querySelector('#fName').focus(); return; }
+      const v = { name, sex: el.querySelector('#fSex .on').dataset.v, color: el.querySelector('#fColor').value.trim() || '未填', status: el.querySelector('#fStatus .on').dataset.v, one: el.querySelector('#fOne').value.trim(), check: Object.fromEntries(CHECKS.map(([key]) => [key, el.querySelector(`[data-check="${key}"]`).checked ? 1 : 0])) };
+      const newSlug = slug ? k.slug : slugify(name);
+      if (photo) { const path = `${IMG_DIR}/${newSlug}-${Date.now().toString(36)}.jpg`; images[path] = photo; v.img = path.slice(4); }
+      if (slug) { Object.assign(k, v); closeSheet(); change(`修改 ${name}`); }
+      else { draft.kittens.push({ slug: newSlug, litter: litterId, v: 'v'+(1+Math.floor(Math.random()*5)), img: null, ...v }); closeSheet(); change(`新增幼貓 ${name}`); }
+    });
+    armDelete(el.querySelector('#fDel'), () => { draft.kittens = draft.kittens.filter(x=>x!==k); closeSheet(); change(`刪除 ${k.name}`); });
+  });
+}
+function armDelete(btn, fn){ if (!btn) return; btn.addEventListener('click', () => { if (btn.classList.contains('arm')) fn(); else { btn.classList.add('arm'); btn.textContent = '確定刪除？再按一次'; setTimeout(()=>{ btn.classList.remove('arm'); btn.textContent = btn.textContent.includes('胎') ? '刪除這一胎' : '刪除這隻幼貓'; }, 4000); } }); }
+
+function shrink(file){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file), im = new Image();
+    im.onload = () => { const max = 1000, r = Math.min(1, max/Math.max(im.width, im.height)); const c = document.createElement('canvas'); c.width = Math.round(im.width*r); c.height = Math.round(im.height*r); c.getContext('2d').drawImage(im,0,0,c.width,c.height); URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg', .82)); };
+    im.onerror = () => { URL.revokeObjectURL(url); rej(new Error('decode')); };
+    im.src = url;
+  });
+}
+
+/* ---------- 發佈 ---------- */
+async function publish(){
+  if (busy) return;
+  if (!token) { tab = 'settings'; render(); toast('請先貼上金鑰才能發佈。', true); return; }
+  busy = true; const btn = document.getElementById('publish'); btn.disabled = true;
+  try {
+    const paths = Object.keys(images); let i = 0;
+    for (const p of paths) { btn.textContent = `上傳照片 ${++i}/${paths.length}`; await putFile(p, images[p].split(',')[1], `後台上傳照片 ${p}`); }
+    btn.textContent = '寫入資料…';
+    const body = utf8ToB64(JSON.stringify({ updated: new Date().toISOString(), litters: draft.litters, kittens: draft.kittens }, null, 1) + '\n');
+    const msg = `後台更新幼貓資料：${log.slice(-3).join('、')}${log.length>3?` 等 ${log.length} 項`:''}`;
+    let res;
+    try { res = await putFile(DATA_PATH, body, msg, sha); }
+    catch(e) { if (e.status===409 || e.status===422) { const j = await gh(`contents/${DATA_PATH}?ref=${BRANCH}`); res = await putFile(DATA_PATH, body, msg, j.sha); } else throw e; }
+    sha = res.content.sha; base = clone(draft); base.updated = new Date().toISOString(); draft = clone(base); log = []; images = {}; ls.del('qiqi-admin-draft');
+    render(); toast(`已發佈。約一分鐘後生效，<a href="${SITE_URL}#kittens" target="_blank" rel="noopener">打開網站看看</a>。`, false, 9000);
+  } catch(e) { toast('發佈失敗：' + e.message, true, 7000); }
+  finally { busy = false; const b = document.getElementById('publish'); if (b) { b.disabled = false; b.textContent = '發佈到網站'; } }
+}
+
+/* ---------- 事件 ---------- */
+function bind(){
+  document.querySelectorAll('[data-status]').forEach(b => b.addEventListener('click', () => { const [slug, s] = b.dataset.status.split(':'); const k = draft.kittens.find(x=>x.slug===slug); if (!k || k.status===s) return; k.status = s; change(`${k.name} 改為${STATUS[s]}`); }));
+  document.querySelectorAll('[data-pub]').forEach(c => c.addEventListener('change', () => { const l = draft.litters[c.dataset.pub]; l.published = c.checked; change(`${parentName(l.dam)} × ${parentName(l.sire)} 這一胎${c.checked?'上架':'下架'}`); }));
+  document.querySelectorAll('[data-add-litter]').forEach(b => b.addEventListener('click', () => litterForm(null)));
+  document.querySelectorAll('[data-edit-litter]').forEach(b => b.addEventListener('click', () => litterForm(b.dataset.editLitter)));
+  document.querySelectorAll('[data-add-kitten]').forEach(b => b.addEventListener('click', () => kittenForm(b.dataset.addKitten, null)));
+  document.querySelectorAll('[data-edit-kitten]').forEach(b => b.addEventListener('click', () => { const k = draft.kittens.find(x=>x.slug===b.dataset.editKitten); kittenForm(k.litter, k.slug); }));
+  document.querySelectorAll('[data-tab-link]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); tab = a.dataset.tabLink; render(); }));
+  const st = document.getElementById('saveToken'); if (st) st.addEventListener('click', async () => { token = document.getElementById('tokenInput').value.trim(); if (!token) return; ls.set('qiqi-admin-token', token); toast('已儲存，正在確認金鑰…'); try { await gh(`contents/${DATA_PATH}?ref=${BRANCH}`); toast('金鑰可以使用。'); tab='kittens'; render(); } catch(e) { toast(e.message, true); } });
+  const ct = document.getElementById('clearToken'); if (ct) ct.addEventListener('click', () => { token=''; ls.del('qiqi-admin-token'); render(); toast('已清除金鑰'); });
+  const rl = document.getElementById('reload'); if (rl) rl.addEventListener('click', () => boot(true));
+}
+document.getElementById('tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; tab = b.dataset.tab; render(); });
+document.getElementById('publish').addEventListener('click', publish);
+document.getElementById('discard').addEventListener('click', discard);
+
+let toastTimer;
+function toast(html, err=false, ms=3500){ const t = document.getElementById('toast'); t.innerHTML = html; t.className = 'toast' + (err?' err':''); t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(()=>{ t.hidden = true; }, ms); }
+
+async function boot(fresh=false){
+  try {
+    base = await fetchRemote();
+    const saved = fresh ? null : (() => { try { return JSON.parse(ls.get('qiqi-admin-draft')); } catch(e){ return null; } })();
+    if (saved && saved.draft && saved.log?.length) { draft = saved.draft; log = saved.log; images = saved.images || {}; toast('已還原上次未發佈的草稿。'); }
+    else { draft = clone(base); log = []; images = {}; ls.del('qiqi-admin-draft'); }
+    render();
+  } catch(e) { app.innerHTML = `<div class="empty" style="margin-top:24px">${esc(e.message)}<br><button class="btn ghost" style="margin-top:14px" onclick="location.reload()">重試</button></div>`; }
+}
+try { const saved = localStorage.getItem('qiqi-theme'); if (saved==='dark'||saved==='light') document.documentElement.dataset.theme = saved; } catch(e){}
+boot();
+</script>

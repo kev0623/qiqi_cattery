@@ -1,0 +1,231 @@
+{
+ "updated": "2026-11-10T00:00:00+08:00",
+ "litters": {
+  "L2026A": {
+   "id": "L2026A",
+   "dam": "luna",
+   "sire": "atlas",
+   "birth": "2026-09-14",
+   "season": "2026 秋",
+   "leave": "2026-12-07",
+   "published": true
+  },
+  "L2026B": {
+   "id": "L2026B",
+   "dam": "coco",
+   "sire": "atlas",
+   "birth": "2026-05-03",
+   "season": "2026 春",
+   "leave": "2026-07-26",
+   "published": true
+  },
+  "L2025A": {
+   "id": "L2025A",
+   "dam": "coco",
+   "sire": "atlas",
+   "birth": "2025-11-02",
+   "season": "2025 冬",
+   "leave": "2026-01-25",
+   "published": true
+  },
+  "L2025B": {
+   "id": "L2025B",
+   "dam": "luna",
+   "sire": "atlas",
+   "birth": "2025-04-20",
+   "season": "2025 春",
+   "leave": "2025-07-13",
+   "published": true
+  }
+ },
+ "kittens": [
+  {
+   "slug": "hazel",
+   "name": "Hazel",
+   "litter": "L2026A",
+   "sex": "女生",
+   "color": "銀漸層",
+   "img": "hazel.jpg",
+   "status": "available",
+   "v": "v3",
+   "one": "一胎裡最先睜眼、也最先爬出產箱的孩子。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 0,
+    "genetic": 1
+   },
+   "video": true
+  },
+  {
+   "slug": "oslo",
+   "name": "Oslo",
+   "litter": "L2026A",
+   "sex": "男生",
+   "color": "藍色",
+   "img": "oslo.jpg",
+   "status": "reserved",
+   "v": "v5",
+   "one": "圓臉圓眼，吃飽就睡，睡醒就找人。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 0,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "pepper",
+   "name": "Pepper",
+   "litter": "L2026A",
+   "sex": "女生",
+   "color": "藍白",
+   "img": "pepper.jpg",
+   "status": "available",
+   "v": "v4",
+   "one": "額頭上有一小撮白，個性最安靜。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 0,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "milo",
+   "name": "Milo",
+   "litter": "L2026B",
+   "sex": "男生",
+   "color": "藍乳白",
+   "img": "milo.jpg",
+   "status": "adopted",
+   "v": "v4",
+   "one": "已經在台中的新家當老大。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "nori",
+   "name": "Nori",
+   "litter": "L2026B",
+   "sex": "女生",
+   "color": "銀虎斑",
+   "img": "nori.jpg",
+   "status": "adopted",
+   "v": "v2",
+   "one": "新家有一隻柴犬，兩週就成了朋友。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "juno",
+   "name": "Juno",
+   "litter": "L2026B",
+   "sex": "男生",
+   "color": "淡紫",
+   "img": "juno.jpg",
+   "status": "adopted",
+   "v": "v1",
+   "one": "最愛窗邊曬太陽。",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "bean",
+   "name": "Bean",
+   "litter": "L2025A",
+   "sex": "女生",
+   "color": "白色",
+   "img": "bean.jpg",
+   "status": "adopted",
+   "v": "v4",
+   "one": "",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "mochi",
+   "name": "Mochi",
+   "litter": "L2025A",
+   "sex": "男生",
+   "color": "白色",
+   "img": "mochi.jpg",
+   "status": "adopted",
+   "v": "v2",
+   "one": "",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "sage",
+   "name": "Sage",
+   "litter": "L2025B",
+   "sex": "女生",
+   "color": "銀虎斑白",
+   "img": "sage.jpg",
+   "status": "adopted",
+   "v": "v3",
+   "one": "",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "teddy",
+   "name": "Teddy",
+   "litter": "L2025B",
+   "sex": "男生",
+   "color": "乳色",
+   "img": "teddy.jpg",
+   "status": "adopted",
+   "v": "v5",
+   "one": "",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  },
+  {
+   "slug": "ollie",
+   "name": "Ollie",
+   "litter": "L2025B",
+   "sex": "男生",
+   "color": "白色",
+   "img": "ollie.jpg",
+   "status": "adopted",
+   "v": "v2",
+   "one": "",
+   "check": {
+    "vaccine": 1,
+    "deworm": 1,
+    "chip": 1,
+    "genetic": 1
+   }
+  }
+ ]
+}
