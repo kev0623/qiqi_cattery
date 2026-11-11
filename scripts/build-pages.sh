@@ -5,12 +5,17 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+HEAD_LINES=10
+HEAD_RE='^<title>|^<link rel="(icon|apple-touch-icon)"'
+
 wrap() { # $1 來源  $2 輸出
   {
     printf '<!doctype html>\n<html lang="zh-Hant">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
     printf '<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%%}[hidden]{display:none!important}</style>\n'
+    # 分頁標題與網站圖示必須放在 <head>：Safari 只讀 <head> 裡的 icon，放在 <body> 會顯示成預設的字母圖示。
+    awk "NR<=$HEAD_LINES && /$HEAD_RE/" "$1"
     printf '</head>\n<body>\n'
-    cat "$1"
+    awk "!(NR<=$HEAD_LINES && /$HEAD_RE/)" "$1"
     printf '\n</body>\n</html>\n'
   } > "$2"
   echo "built $2"
